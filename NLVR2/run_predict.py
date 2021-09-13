@@ -91,7 +91,7 @@ def prepare_dev_features_single(example, tokenizer, args):
     
     bert_feature = tokenizer.encode(caption_a, return_attention_mask=True)
     
-    label = paddle.to_tensor(label, dtype=paddle.int64) #TODO
+    label = paddle.to_tensor(label, dtype=paddle.int64)
     
     data = {
         "input_ids": bert_feature["input_ids"],
