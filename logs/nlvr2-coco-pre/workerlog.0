@@ -1,0 +1,387 @@
+/mnt/data/kychen/workspace/paddle_visual_bert/PaddleNLP/paddlenlp/transformers/transformer/modeling.py:85: DeprecationWarning: invalid escape sequence \_
+  """
+-----------  Configuration Arguments -----------
+adam_epsilon: 1e-06
+bert_model_name: bert-base-uncased
+dataset: coco_captions
+device: gpu
+eager_run: True
+eval_batch_size: 12
+image_feature_type: coco_detectron_fix_144
+init_from_ckpt: False
+input_dir: ./X_COCO/
+learning_rate: 1e-05
+logging_steps: 100
+mask_prob: 0.15
+max_seq_length: 128
+max_steps: -1
+model_name_or_path: visualbert-nlvr2-coco-pre
+model_type: visualbert
+num_train_epochs: 1
+output_dir: ./logs/nlvr2-coco-pre
+save_steps: 1000
+seed: 42
+train_batch_size: 12
+use_amp: False
+warmup_steps: 10000
+weight_decay: 0.01
+------------------------------------------------
+[32m[2021-09-13 08:18:19,332] [    INFO][0m - Already cached /home/chenkangyang/.paddlenlp/models/bert-base-uncased/bert-base-uncased-vocab.txt[0m
+[32m[2021-09-13 08:18:19,359] [    INFO][0m - Already cached /home/chenkangyang/.paddlenlp/models/visualbert-nlvr2-coco-pre/visualbert-nlvr2-coco-pre.pdparams[0m
+W0913 08:18:19.361111 26715 device_context.cc:404] Please NOTE: device: 2, GPU Compute Capability: 6.1, Driver API Version: 10.2, Runtime API Version: 10.2
+W0913 08:18:19.366477 26715 device_context.cc:422] device: 2, cuDNN Version: 7.6.
+start load data : 2021-09-13 08:18:25
+2021-09-13 08:18:25,848-INFO: unique_endpoints {'127.0.0.1:58822'}
+loading annotations into memory...
+Done (t=0.80s)
+creating index...
+index created!
+414113 of captions in total.
+load data done, total : 5.359721899032593 s
+start train : 2021-09-13 08:18:31
+global step 100/34510, epoch: 0, batch: 99, loss: 0.942524135112762, lr: 0.0000001000, speed: 1.57 s/it
+global step 200/34510, epoch: 0, batch: 199, loss: 0.955847978591919, lr: 0.0000002000, speed: 1.36 s/it
+global step 300/34510, epoch: 0, batch: 299, loss: 0.951113581657410, lr: 0.0000003000, speed: 1.37 s/it
+global step 400/34510, epoch: 0, batch: 399, loss: 0.891971707344055, lr: 0.0000004000, speed: 1.24 s/it
+global step 500/34510, epoch: 0, batch: 499, loss: 0.937253713607788, lr: 0.0000005000, speed: 1.29 s/it
+global step 600/34510, epoch: 0, batch: 599, loss: 0.957543015480042, lr: 0.0000006000, speed: 1.49 s/it
+global step 700/34510, epoch: 0, batch: 699, loss: 0.984666705131531, lr: 0.0000007000, speed: 1.49 s/it
+global step 800/34510, epoch: 0, batch: 799, loss: 0.956786453723907, lr: 0.0000008000, speed: 1.52 s/it
+global step 900/34510, epoch: 0, batch: 899, loss: 0.966812729835510, lr: 0.0000009000, speed: 1.50 s/it
+global step 1000/34510, epoch: 0, batch: 999, loss: 0.990798950195312, lr: 0.0000010000, speed: 1.55 s/it
+global step 1100/34510, epoch: 0, batch: 1099, loss: 0.931089460849762, lr: 0.0000011000, speed: 1.54 s/it
+global step 1200/34510, epoch: 0, batch: 1199, loss: 1.004183292388916, lr: 0.0000012000, speed: 1.41 s/it
+global step 1300/34510, epoch: 0, batch: 1299, loss: 0.974874258041382, lr: 0.0000013000, speed: 1.45 s/it
+global step 1400/34510, epoch: 0, batch: 1399, loss: 0.921866416931152, lr: 0.0000014000, speed: 1.50 s/it
+global step 1500/34510, epoch: 0, batch: 1499, loss: 0.946898162364960, lr: 0.0000015000, speed: 1.54 s/it
+global step 1600/34510, epoch: 0, batch: 1599, loss: 0.952010452747345, lr: 0.0000016000, speed: 1.48 s/it
+global step 1700/34510, epoch: 0, batch: 1699, loss: 0.972475588321686, lr: 0.0000017000, speed: 1.43 s/it
+global step 1800/34510, epoch: 0, batch: 1799, loss: 1.020443081855774, lr: 0.0000018000, speed: 1.41 s/it
+global step 1900/34510, epoch: 0, batch: 1899, loss: 0.973386228084564, lr: 0.0000019000, speed: 1.51 s/it
+global step 2000/34510, epoch: 0, batch: 1999, loss: 0.975552976131439, lr: 0.0000020000, speed: 1.42 s/it
+global step 2100/34510, epoch: 0, batch: 2099, loss: 0.965895950794220, lr: 0.0000021000, speed: 1.40 s/it
+global step 2200/34510, epoch: 0, batch: 2199, loss: 1.008577823638916, lr: 0.0000022000, speed: 1.40 s/it
+global step 2300/34510, epoch: 0, batch: 2299, loss: 0.919872999191284, lr: 0.0000023000, speed: 1.25 s/it
+global step 2400/34510, epoch: 0, batch: 2399, loss: 0.926647901535034, lr: 0.0000024000, speed: 1.14 s/it
+global step 2500/34510, epoch: 0, batch: 2499, loss: 1.005864262580872, lr: 0.0000025000, speed: 1.15 s/it
+global step 2600/34510, epoch: 0, batch: 2599, loss: 0.935407698154449, lr: 0.0000026000, speed: 1.14 s/it
+global step 2700/34510, epoch: 0, batch: 2699, loss: 0.972939431667328, lr: 0.0000027000, speed: 1.13 s/it
+global step 2800/34510, epoch: 0, batch: 2799, loss: 0.939831495285034, lr: 0.0000028000, speed: 1.06 s/it
+global step 2900/34510, epoch: 0, batch: 2899, loss: 0.988469243049622, lr: 0.0000029000, speed: 1.01 s/it
+global step 3000/34510, epoch: 0, batch: 2999, loss: 0.947128891944885, lr: 0.0000030000, speed: 1.14 s/it
+global step 3100/34510, epoch: 0, batch: 3099, loss: 1.002436518669128, lr: 0.0000031000, speed: 1.17 s/it
+global step 3200/34510, epoch: 0, batch: 3199, loss: 1.025559067726135, lr: 0.0000032000, speed: 1.14 s/it
+global step 3300/34510, epoch: 0, batch: 3299, loss: 0.964035630226135, lr: 0.0000033000, speed: 1.16 s/it
+global step 3400/34510, epoch: 0, batch: 3399, loss: 1.042468190193176, lr: 0.0000034000, speed: 1.13 s/it
+global step 3500/34510, epoch: 0, batch: 3499, loss: 0.916130363941193, lr: 0.0000035000, speed: 1.17 s/it
+global step 3600/34510, epoch: 0, batch: 3599, loss: 0.950114727020264, lr: 0.0000036000, speed: 1.16 s/it
+global step 3700/34510, epoch: 0, batch: 3699, loss: 1.008908629417419, lr: 0.0000037000, speed: 1.07 s/it
+global step 3800/34510, epoch: 0, batch: 3799, loss: 0.980063438415527, lr: 0.0000038000, speed: 1.04 s/it
+global step 3900/34510, epoch: 0, batch: 3899, loss: 1.013723134994507, lr: 0.0000039000, speed: 1.04 s/it
+global step 4000/34510, epoch: 0, batch: 3999, loss: 0.969045400619507, lr: 0.0000040000, speed: 1.02 s/it
+global step 4100/34510, epoch: 0, batch: 4099, loss: 0.996987283229828, lr: 0.0000041000, speed: 1.06 s/it
+global step 4200/34510, epoch: 0, batch: 4199, loss: 1.003771901130676, lr: 0.0000042000, speed: 1.02 s/it
+global step 4300/34510, epoch: 0, batch: 4299, loss: 0.990661621093750, lr: 0.0000043000, speed: 1.13 s/it
+global step 4400/34510, epoch: 0, batch: 4399, loss: 1.006552696228027, lr: 0.0000044000, speed: 1.08 s/it
+global step 4500/34510, epoch: 0, batch: 4499, loss: 0.972602546215057, lr: 0.0000045000, speed: 1.10 s/it
+global step 4600/34510, epoch: 0, batch: 4599, loss: 0.989389598369598, lr: 0.0000046000, speed: 1.10 s/it
+global step 4700/34510, epoch: 0, batch: 4699, loss: 1.021826148033142, lr: 0.0000047000, speed: 1.10 s/it
+global step 4800/34510, epoch: 0, batch: 4799, loss: 0.967885732650757, lr: 0.0000048000, speed: 1.01 s/it
+global step 4900/34510, epoch: 0, batch: 4899, loss: 0.930332005023956, lr: 0.0000049000, speed: 1.01 s/it
+global step 5000/34510, epoch: 0, batch: 4999, loss: 0.980874001979828, lr: 0.0000050000, speed: 1.12 s/it
+global step 5100/34510, epoch: 0, batch: 5099, loss: 1.030400395393372, lr: 0.0000051000, speed: 1.14 s/it
+global step 5200/34510, epoch: 0, batch: 5199, loss: 0.958540022373199, lr: 0.0000052000, speed: 1.17 s/it
+global step 5300/34510, epoch: 0, batch: 5299, loss: 1.024028301239014, lr: 0.0000053000, speed: 1.20 s/it
+global step 5400/34510, epoch: 0, batch: 5399, loss: 0.969541013240814, lr: 0.0000054000, speed: 1.19 s/it
+global step 5500/34510, epoch: 0, batch: 5499, loss: 0.974721670150757, lr: 0.0000055000, speed: 1.16 s/it
+global step 5600/34510, epoch: 0, batch: 5599, loss: 0.989082038402557, lr: 0.0000056000, speed: 1.23 s/it
+global step 5700/34510, epoch: 0, batch: 5699, loss: 0.964414060115814, lr: 0.0000057000, speed: 1.19 s/it
+global step 5800/34510, epoch: 0, batch: 5799, loss: 0.994790017604828, lr: 0.0000058000, speed: 1.23 s/it
+global step 5900/34510, epoch: 0, batch: 5899, loss: 0.957426726818085, lr: 0.0000059000, speed: 1.22 s/it
+global step 6000/34510, epoch: 0, batch: 5999, loss: 1.009033203125000, lr: 0.0000060000, speed: 1.14 s/it
+global step 6100/34510, epoch: 0, batch: 6099, loss: 0.951538085937500, lr: 0.0000061000, speed: 1.19 s/it
+global step 6200/34510, epoch: 0, batch: 6199, loss: 0.976015627384186, lr: 0.0000062000, speed: 1.18 s/it
+global step 6300/34510, epoch: 0, batch: 6299, loss: 0.946352541446686, lr: 0.0000063000, speed: 1.26 s/it
+global step 6400/34510, epoch: 0, batch: 6399, loss: 0.963276326656342, lr: 0.0000064000, speed: 1.24 s/it
+global step 6500/34510, epoch: 0, batch: 6499, loss: 1.000668883323669, lr: 0.0000065000, speed: 1.24 s/it
+global step 6600/34510, epoch: 0, batch: 6599, loss: 0.957705080509186, lr: 0.0000066000, speed: 1.24 s/it
+global step 6700/34510, epoch: 0, batch: 6699, loss: 0.956977546215057, lr: 0.0000067000, speed: 1.27 s/it
+global step 6800/34510, epoch: 0, batch: 6799, loss: 0.974736332893372, lr: 0.0000068000, speed: 1.27 s/it
+global step 6900/34510, epoch: 0, batch: 6899, loss: 1.027182579040527, lr: 0.0000069000, speed: 1.39 s/it
+global step 7000/34510, epoch: 0, batch: 6999, loss: 0.887402296066284, lr: 0.0000070000, speed: 1.09 s/it
+global step 7100/34510, epoch: 0, batch: 7099, loss: 0.944999992847443, lr: 0.0000071000, speed: 0.71 s/it
+global step 7200/34510, epoch: 0, batch: 7199, loss: 0.995869100093842, lr: 0.0000072000, speed: 0.68 s/it
+global step 7300/34510, epoch: 0, batch: 7299, loss: 1.043725609779358, lr: 0.0000073000, speed: 0.77 s/it
+global step 7400/34510, epoch: 0, batch: 7399, loss: 0.962060511112213, lr: 0.0000074000, speed: 0.73 s/it
+global step 7500/34510, epoch: 0, batch: 7499, loss: 0.978935539722443, lr: 0.0000075000, speed: 0.79 s/it
+global step 7600/34510, epoch: 0, batch: 7599, loss: 0.986879885196686, lr: 0.0000076000, speed: 0.78 s/it
+global step 7700/34510, epoch: 0, batch: 7699, loss: 1.018701195716858, lr: 0.0000077000, speed: 0.78 s/it
+global step 7800/34510, epoch: 0, batch: 7799, loss: 1.003388643264771, lr: 0.0000078000, speed: 0.75 s/it
+global step 7900/34510, epoch: 0, batch: 7899, loss: 0.963002920150757, lr: 0.0000079000, speed: 0.74 s/it
+global step 8000/34510, epoch: 0, batch: 7999, loss: 1.037636637687683, lr: 0.0000080000, speed: 0.72 s/it
+global step 8100/34510, epoch: 0, batch: 8099, loss: 0.976269483566284, lr: 0.0000081000, speed: 0.75 s/it
+global step 8200/34510, epoch: 0, batch: 8199, loss: 0.977646470069885, lr: 0.0000082000, speed: 0.72 s/it
+global step 8300/34510, epoch: 0, batch: 8299, loss: 1.053315401077271, lr: 0.0000083000, speed: 0.66 s/it
+global step 8400/34510, epoch: 0, batch: 8399, loss: 1.008945345878601, lr: 0.0000084000, speed: 0.67 s/it
+global step 8500/34510, epoch: 0, batch: 8499, loss: 1.023847579956055, lr: 0.0000085000, speed: 0.67 s/it
+global step 8600/34510, epoch: 0, batch: 8599, loss: 1.011962890625000, lr: 0.0000086000, speed: 0.76 s/it
+global step 8700/34510, epoch: 0, batch: 8699, loss: 0.976894497871399, lr: 0.0000087000, speed: 0.79 s/it
+global step 8800/34510, epoch: 0, batch: 8799, loss: 0.944677710533142, lr: 0.0000088000, speed: 0.72 s/it
+global step 8900/34510, epoch: 0, batch: 8899, loss: 0.939687490463257, lr: 0.0000089000, speed: 0.70 s/it
+global step 9000/34510, epoch: 0, batch: 8999, loss: 0.949433565139771, lr: 0.0000090000, speed: 0.71 s/it
+global step 9100/34510, epoch: 0, batch: 9099, loss: 0.997607409954071, lr: 0.0000091000, speed: 0.64 s/it
+global step 9200/34510, epoch: 0, batch: 9199, loss: 0.999199211597443, lr: 0.0000092000, speed: 0.69 s/it
+global step 9300/34510, epoch: 0, batch: 9299, loss: 0.967011690139771, lr: 0.0000093000, speed: 0.77 s/it
+global step 9400/34510, epoch: 0, batch: 9399, loss: 0.977753877639771, lr: 0.0000094000, speed: 1.13 s/it
+global step 9500/34510, epoch: 0, batch: 9499, loss: 1.031962871551514, lr: 0.0000095000, speed: 1.32 s/it
+global step 9600/34510, epoch: 0, batch: 9599, loss: 0.986552715301514, lr: 0.0000096000, speed: 1.31 s/it
+global step 9700/34510, epoch: 0, batch: 9699, loss: 0.988710939884186, lr: 0.0000097000, speed: 1.11 s/it
+global step 9800/34510, epoch: 0, batch: 9799, loss: 0.962714850902557, lr: 0.0000098000, speed: 1.12 s/it
+global step 9900/34510, epoch: 0, batch: 9899, loss: 1.021494150161743, lr: 0.0000099000, speed: 1.39 s/it
+global step 10000/34510, epoch: 0, batch: 9999, loss: 0.965849578380585, lr: 0.0000100000, speed: 1.14 s/it
+global step 10100/34510, epoch: 0, batch: 10099, loss: 0.943242192268372, lr: 0.0000099592, speed: 1.25 s/it
+global step 10200/34510, epoch: 0, batch: 10199, loss: 0.964912116527557, lr: 0.0000099184, speed: 0.75 s/it
+global step 10300/34510, epoch: 0, batch: 10299, loss: 1.028554677963257, lr: 0.0000098776, speed: 0.70 s/it
+global step 10400/34510, epoch: 0, batch: 10399, loss: 1.031386733055115, lr: 0.0000098368, speed: 0.74 s/it
+global step 10500/34510, epoch: 0, batch: 10499, loss: 0.976962864398956, lr: 0.0000097960, speed: 0.74 s/it
+global step 10600/34510, epoch: 0, batch: 10599, loss: 0.940478503704071, lr: 0.0000097552, speed: 0.75 s/it
+global step 10700/34510, epoch: 0, batch: 10699, loss: 0.939531207084656, lr: 0.0000097144, speed: 0.74 s/it
+global step 10800/34510, epoch: 0, batch: 10799, loss: 0.969814419746399, lr: 0.0000096736, speed: 0.75 s/it
+global step 10900/34510, epoch: 0, batch: 10899, loss: 1.018339872360229, lr: 0.0000096328, speed: 0.74 s/it
+global step 11000/34510, epoch: 0, batch: 10999, loss: 0.962705075740814, lr: 0.0000095920, speed: 0.76 s/it
+global step 11100/34510, epoch: 0, batch: 11099, loss: 0.982275366783142, lr: 0.0000095512, speed: 0.78 s/it
+global step 11200/34510, epoch: 0, batch: 11199, loss: 0.994853496551514, lr: 0.0000095104, speed: 0.74 s/it
+global step 11300/34510, epoch: 0, batch: 11299, loss: 1.029794931411743, lr: 0.0000094696, speed: 0.74 s/it
+global step 11400/34510, epoch: 0, batch: 11399, loss: 1.030605435371399, lr: 0.0000094288, speed: 0.73 s/it
+global step 11500/34510, epoch: 0, batch: 11499, loss: 0.987587869167328, lr: 0.0000093880, speed: 0.73 s/it
+global step 11600/34510, epoch: 0, batch: 11599, loss: 0.998173832893372, lr: 0.0000093472, speed: 0.72 s/it
+global step 11700/34510, epoch: 0, batch: 11699, loss: 1.031669855117798, lr: 0.0000093064, speed: 0.70 s/it
+global step 11800/34510, epoch: 0, batch: 11799, loss: 0.906943321228027, lr: 0.0000092656, speed: 0.78 s/it
+global step 11900/34510, epoch: 0, batch: 11899, loss: 1.017900347709656, lr: 0.0000092248, speed: 0.76 s/it
+global step 12000/34510, epoch: 0, batch: 11999, loss: 1.022402286529541, lr: 0.0000091840, speed: 0.75 s/it
+global step 12100/34510, epoch: 0, batch: 12099, loss: 0.970498025417328, lr: 0.0000091432, speed: 0.78 s/it
+global step 12200/34510, epoch: 0, batch: 12199, loss: 1.014550805091858, lr: 0.0000091024, speed: 0.77 s/it
+global step 12300/34510, epoch: 0, batch: 12299, loss: 1.037451148033142, lr: 0.0000090616, speed: 0.78 s/it
+global step 12400/34510, epoch: 0, batch: 12399, loss: 0.984199225902557, lr: 0.0000090208, speed: 0.77 s/it
+global step 12500/34510, epoch: 0, batch: 12499, loss: 1.037207007408142, lr: 0.0000089800, speed: 0.74 s/it
+global step 12600/34510, epoch: 0, batch: 12599, loss: 1.023193359375000, lr: 0.0000089392, speed: 0.70 s/it
+global step 12700/34510, epoch: 0, batch: 12699, loss: 0.976542949676514, lr: 0.0000088984, speed: 0.73 s/it
+global step 12800/34510, epoch: 0, batch: 12799, loss: 0.982333958148956, lr: 0.0000088576, speed: 0.82 s/it
+global step 12900/34510, epoch: 0, batch: 12899, loss: 0.965820312500000, lr: 0.0000088168, speed: 0.82 s/it
+global step 13000/34510, epoch: 0, batch: 12999, loss: 1.018808603286743, lr: 0.0000087760, speed: 0.77 s/it
+global step 13100/34510, epoch: 0, batch: 13099, loss: 0.980917930603027, lr: 0.0000087352, speed: 0.80 s/it
+global step 13200/34510, epoch: 0, batch: 13199, loss: 0.964707016944885, lr: 0.0000086944, speed: 0.78 s/it
+global step 13300/34510, epoch: 0, batch: 13299, loss: 0.996806621551514, lr: 0.0000086536, speed: 0.73 s/it
+global step 13400/34510, epoch: 0, batch: 13399, loss: 0.967939436435699, lr: 0.0000086128, speed: 0.72 s/it
+global step 13500/34510, epoch: 0, batch: 13499, loss: 0.935810506343842, lr: 0.0000085720, speed: 0.72 s/it
+global step 13600/34510, epoch: 0, batch: 13599, loss: 0.992548823356628, lr: 0.0000085312, speed: 0.72 s/it
+global step 13700/34510, epoch: 0, batch: 13699, loss: 1.068564414978027, lr: 0.0000084904, speed: 0.72 s/it
+global step 13800/34510, epoch: 0, batch: 13799, loss: 0.978095710277557, lr: 0.0000084496, speed: 0.72 s/it
+global step 13900/34510, epoch: 0, batch: 13899, loss: 0.997910141944885, lr: 0.0000084088, speed: 0.74 s/it
+global step 14000/34510, epoch: 0, batch: 13999, loss: 0.984872996807098, lr: 0.0000083680, speed: 0.74 s/it
+global step 14100/34510, epoch: 0, batch: 14099, loss: 1.006044864654541, lr: 0.0000083272, speed: 0.76 s/it
+global step 14200/34510, epoch: 0, batch: 14199, loss: 0.972792923450470, lr: 0.0000082864, speed: 0.72 s/it
+global step 14300/34510, epoch: 0, batch: 14299, loss: 0.995859324932098, lr: 0.0000082456, speed: 0.73 s/it
+global step 14400/34510, epoch: 0, batch: 14399, loss: 0.925263643264771, lr: 0.0000082048, speed: 0.69 s/it
+global step 14500/34510, epoch: 0, batch: 14499, loss: 1.000136733055115, lr: 0.0000081640, speed: 0.69 s/it
+global step 14600/34510, epoch: 0, batch: 14599, loss: 0.950917959213257, lr: 0.0000081232, speed: 0.73 s/it
+global step 14700/34510, epoch: 0, batch: 14699, loss: 0.968017578125000, lr: 0.0000080824, speed: 0.72 s/it
+global step 14800/34510, epoch: 0, batch: 14799, loss: 1.063515543937683, lr: 0.0000080416, speed: 0.71 s/it
+global step 14900/34510, epoch: 0, batch: 14899, loss: 0.969619095325470, lr: 0.0000080008, speed: 0.73 s/it
+global step 15000/34510, epoch: 0, batch: 14999, loss: 0.947871088981628, lr: 0.0000079600, speed: 0.71 s/it
+global step 15100/34510, epoch: 0, batch: 15099, loss: 1.041259765625000, lr: 0.0000079192, speed: 0.75 s/it
+global step 15200/34510, epoch: 0, batch: 15199, loss: 0.984316408634186, lr: 0.0000078784, speed: 0.72 s/it
+global step 15300/34510, epoch: 0, batch: 15299, loss: 0.988398432731628, lr: 0.0000078376, speed: 0.74 s/it
+global step 15400/34510, epoch: 0, batch: 15399, loss: 1.049091815948486, lr: 0.0000077968, speed: 0.71 s/it
+global step 15500/34510, epoch: 0, batch: 15499, loss: 1.009824156761169, lr: 0.0000077560, speed: 0.71 s/it
+global step 15600/34510, epoch: 0, batch: 15599, loss: 0.968828082084656, lr: 0.0000077152, speed: 0.72 s/it
+global step 15700/34510, epoch: 0, batch: 15699, loss: 1.013876914978027, lr: 0.0000076744, speed: 0.72 s/it
+global step 15800/34510, epoch: 0, batch: 15799, loss: 1.007617115974426, lr: 0.0000076336, speed: 0.73 s/it
+global step 15900/34510, epoch: 0, batch: 15899, loss: 0.961845695972443, lr: 0.0000075928, speed: 0.72 s/it
+global step 16000/34510, epoch: 0, batch: 15999, loss: 0.987753868103027, lr: 0.0000075520, speed: 0.67 s/it
+global step 16100/34510, epoch: 0, batch: 16099, loss: 1.040859341621399, lr: 0.0000075112, speed: 0.69 s/it
+global step 16200/34510, epoch: 0, batch: 16199, loss: 1.012587904930115, lr: 0.0000074704, speed: 0.64 s/it
+global step 16300/34510, epoch: 0, batch: 16299, loss: 0.997978508472443, lr: 0.0000074296, speed: 0.63 s/it
+global step 16400/34510, epoch: 0, batch: 16399, loss: 0.944892585277557, lr: 0.0000073888, speed: 0.64 s/it
+global step 16500/34510, epoch: 0, batch: 16499, loss: 0.999013662338257, lr: 0.0000073480, speed: 0.63 s/it
+global step 16600/34510, epoch: 0, batch: 16599, loss: 1.032509684562683, lr: 0.0000073072, speed: 0.63 s/it
+global step 16700/34510, epoch: 0, batch: 16699, loss: 1.016376972198486, lr: 0.0000072664, speed: 0.66 s/it
+global step 16800/34510, epoch: 0, batch: 16799, loss: 1.009257793426514, lr: 0.0000072256, speed: 0.64 s/it
+global step 16900/34510, epoch: 0, batch: 16899, loss: 1.021367192268372, lr: 0.0000071848, speed: 0.63 s/it
+global step 17000/34510, epoch: 0, batch: 16999, loss: 0.971933543682098, lr: 0.0000071440, speed: 0.63 s/it
+global step 17100/34510, epoch: 0, batch: 17099, loss: 0.990898430347443, lr: 0.0000071032, speed: 0.68 s/it
+global step 17200/34510, epoch: 0, batch: 17199, loss: 1.051445245742798, lr: 0.0000070624, speed: 0.64 s/it
+global step 17300/34510, epoch: 0, batch: 17299, loss: 1.068163990974426, lr: 0.0000070216, speed: 0.62 s/it
+global step 17400/34510, epoch: 0, batch: 17399, loss: 0.969062507152557, lr: 0.0000069808, speed: 0.62 s/it
+global step 17500/34510, epoch: 0, batch: 17499, loss: 1.005605459213257, lr: 0.0000069400, speed: 0.62 s/it
+global step 17600/34510, epoch: 0, batch: 17599, loss: 0.993222653865814, lr: 0.0000068992, speed: 0.62 s/it
+global step 17700/34510, epoch: 0, batch: 17699, loss: 0.957207024097443, lr: 0.0000068584, speed: 0.61 s/it
+global step 17800/34510, epoch: 0, batch: 17799, loss: 0.961660146713257, lr: 0.0000068176, speed: 0.60 s/it
+global step 17900/34510, epoch: 0, batch: 17899, loss: 0.985429644584656, lr: 0.0000067768, speed: 0.62 s/it
+global step 18000/34510, epoch: 0, batch: 17999, loss: 1.017910122871399, lr: 0.0000067360, speed: 0.62 s/it
+global step 18100/34510, epoch: 0, batch: 18099, loss: 1.046699166297913, lr: 0.0000066952, speed: 0.65 s/it
+global step 18200/34510, epoch: 0, batch: 18199, loss: 0.943476557731628, lr: 0.0000066544, speed: 0.61 s/it
+global step 18300/34510, epoch: 0, batch: 18299, loss: 1.014667987823486, lr: 0.0000066136, speed: 0.62 s/it
+global step 18400/34510, epoch: 0, batch: 18399, loss: 1.021621108055115, lr: 0.0000065728, speed: 0.65 s/it
+global step 18500/34510, epoch: 0, batch: 18499, loss: 0.948535144329071, lr: 0.0000065320, speed: 0.65 s/it
+global step 18600/34510, epoch: 0, batch: 18599, loss: 1.019902348518372, lr: 0.0000064912, speed: 0.65 s/it
+global step 18700/34510, epoch: 0, batch: 18699, loss: 0.963164031505585, lr: 0.0000064504, speed: 0.64 s/it
+global step 18800/34510, epoch: 0, batch: 18799, loss: 0.997753858566284, lr: 0.0000064096, speed: 0.66 s/it
+global step 18900/34510, epoch: 0, batch: 18899, loss: 0.985195279121399, lr: 0.0000063688, speed: 0.65 s/it
+global step 19000/34510, epoch: 0, batch: 18999, loss: 0.959980428218842, lr: 0.0000063280, speed: 0.65 s/it
+global step 19100/34510, epoch: 0, batch: 19099, loss: 0.992675781250000, lr: 0.0000062872, speed: 0.68 s/it
+global step 19200/34510, epoch: 0, batch: 19199, loss: 0.977519512176514, lr: 0.0000062464, speed: 0.65 s/it
+global step 19300/34510, epoch: 0, batch: 19299, loss: 1.029570341110229, lr: 0.0000062056, speed: 0.65 s/it
+global step 19400/34510, epoch: 0, batch: 19399, loss: 0.987949192523956, lr: 0.0000061648, speed: 0.64 s/it
+global step 19500/34510, epoch: 0, batch: 19499, loss: 0.970429658889771, lr: 0.0000061240, speed: 0.66 s/it
+global step 19600/34510, epoch: 0, batch: 19599, loss: 1.074726581573486, lr: 0.0000060832, speed: 0.65 s/it
+global step 19700/34510, epoch: 0, batch: 19699, loss: 0.999316394329071, lr: 0.0000060424, speed: 0.65 s/it
+global step 19800/34510, epoch: 0, batch: 19799, loss: 0.974960923194885, lr: 0.0000060016, speed: 0.62 s/it
+global step 19900/34510, epoch: 0, batch: 19899, loss: 1.003945231437683, lr: 0.0000059608, speed: 0.64 s/it
+global step 20000/34510, epoch: 0, batch: 19999, loss: 1.021093726158142, lr: 0.0000059200, speed: 0.65 s/it
+global step 20100/34510, epoch: 0, batch: 20099, loss: 0.961562454700470, lr: 0.0000058792, speed: 0.68 s/it
+global step 20200/34510, epoch: 0, batch: 20199, loss: 1.008496046066284, lr: 0.0000058384, speed: 0.62 s/it
+global step 20300/34510, epoch: 0, batch: 20299, loss: 1.023085951805115, lr: 0.0000057976, speed: 0.63 s/it
+global step 20400/34510, epoch: 0, batch: 20399, loss: 1.008027315139771, lr: 0.0000057568, speed: 0.63 s/it
+global step 20500/34510, epoch: 0, batch: 20499, loss: 1.000761747360229, lr: 0.0000057160, speed: 0.63 s/it
+global step 20600/34510, epoch: 0, batch: 20599, loss: 0.997089803218842, lr: 0.0000056752, speed: 0.62 s/it
+global step 20700/34510, epoch: 0, batch: 20699, loss: 0.945078074932098, lr: 0.0000056344, speed: 0.61 s/it
+global step 20800/34510, epoch: 0, batch: 20799, loss: 0.990117192268372, lr: 0.0000055936, speed: 0.62 s/it
+global step 20900/34510, epoch: 0, batch: 20899, loss: 0.931796848773956, lr: 0.0000055528, speed: 0.62 s/it
+global step 21000/34510, epoch: 0, batch: 20999, loss: 0.989492177963257, lr: 0.0000055120, speed: 0.60 s/it
+global step 21100/34510, epoch: 0, batch: 21099, loss: 1.021484375000000, lr: 0.0000054712, speed: 0.63 s/it
+global step 21200/34510, epoch: 0, batch: 21199, loss: 1.028417944908142, lr: 0.0000054304, speed: 0.60 s/it
+global step 21300/34510, epoch: 0, batch: 21299, loss: 0.961503863334656, lr: 0.0000053896, speed: 0.60 s/it
+global step 21400/34510, epoch: 0, batch: 21399, loss: 0.922578096389771, lr: 0.0000053488, speed: 0.60 s/it
+global step 21500/34510, epoch: 0, batch: 21499, loss: 0.937949180603027, lr: 0.0000053080, speed: 0.60 s/it
+global step 21600/34510, epoch: 0, batch: 21599, loss: 1.043281197547913, lr: 0.0000052672, speed: 0.61 s/it
+global step 21700/34510, epoch: 0, batch: 21699, loss: 0.994628906250000, lr: 0.0000052264, speed: 0.61 s/it
+global step 21800/34510, epoch: 0, batch: 21799, loss: 1.004628896713257, lr: 0.0000051856, speed: 0.60 s/it
+global step 21900/34510, epoch: 0, batch: 21899, loss: 1.014121055603027, lr: 0.0000051448, speed: 0.59 s/it
+global step 22000/34510, epoch: 0, batch: 21999, loss: 0.979062497615814, lr: 0.0000051040, speed: 0.61 s/it
+global step 22100/34510, epoch: 0, batch: 22099, loss: 0.957675755023956, lr: 0.0000050632, speed: 0.62 s/it
+global step 22200/34510, epoch: 0, batch: 22199, loss: 1.017382740974426, lr: 0.0000050224, speed: 0.60 s/it
+global step 22300/34510, epoch: 0, batch: 22299, loss: 1.025039076805115, lr: 0.0000049816, speed: 0.63 s/it
+global step 22400/34510, epoch: 0, batch: 22399, loss: 0.969726562500000, lr: 0.0000049408, speed: 0.61 s/it
+global step 22500/34510, epoch: 0, batch: 22499, loss: 0.936367154121399, lr: 0.0000049000, speed: 0.61 s/it
+global step 22600/34510, epoch: 0, batch: 22599, loss: 1.012187480926514, lr: 0.0000048592, speed: 0.62 s/it
+global step 22700/34510, epoch: 0, batch: 22699, loss: 1.009062528610229, lr: 0.0000048184, speed: 0.62 s/it
+global step 22800/34510, epoch: 0, batch: 22799, loss: 1.019726514816284, lr: 0.0000047776, speed: 0.60 s/it
+global step 22900/34510, epoch: 0, batch: 22899, loss: 0.953515589237213, lr: 0.0000047368, speed: 0.61 s/it
+global step 23000/34510, epoch: 0, batch: 22999, loss: 0.895351529121399, lr: 0.0000046960, speed: 0.61 s/it
+global step 23100/34510, epoch: 0, batch: 23099, loss: 0.951074182987213, lr: 0.0000046552, speed: 0.68 s/it
+global step 23200/34510, epoch: 0, batch: 23199, loss: 1.050624966621399, lr: 0.0000046144, speed: 0.64 s/it
+global step 23300/34510, epoch: 0, batch: 23299, loss: 0.991953074932098, lr: 0.0000045736, speed: 0.66 s/it
+global step 23400/34510, epoch: 0, batch: 23399, loss: 1.022089838981628, lr: 0.0000045328, speed: 0.66 s/it
+global step 23500/34510, epoch: 0, batch: 23499, loss: 1.007910132408142, lr: 0.0000044920, speed: 0.69 s/it
+global step 23600/34510, epoch: 0, batch: 23599, loss: 0.959550738334656, lr: 0.0000044512, speed: 0.71 s/it
+global step 23700/34510, epoch: 0, batch: 23699, loss: 0.960351526737213, lr: 0.0000044104, speed: 0.69 s/it
+global step 23800/34510, epoch: 0, batch: 23799, loss: 0.996972620487213, lr: 0.0000043696, speed: 0.69 s/it
+global step 23900/34510, epoch: 0, batch: 23899, loss: 0.972753882408142, lr: 0.0000043288, speed: 0.69 s/it
+global step 24000/34510, epoch: 0, batch: 23999, loss: 0.989589810371399, lr: 0.0000042880, speed: 0.68 s/it
+global step 24100/34510, epoch: 0, batch: 24099, loss: 0.958652317523956, lr: 0.0000042472, speed: 0.72 s/it
+global step 24200/34510, epoch: 0, batch: 24199, loss: 0.963886678218842, lr: 0.0000042064, speed: 0.69 s/it
+global step 24300/34510, epoch: 0, batch: 24299, loss: 1.018281221389771, lr: 0.0000041656, speed: 0.68 s/it
+global step 24400/34510, epoch: 0, batch: 24399, loss: 1.021660089492798, lr: 0.0000041248, speed: 0.69 s/it
+global step 24500/34510, epoch: 0, batch: 24499, loss: 1.010800719261169, lr: 0.0000040840, speed: 0.69 s/it
+global step 24600/34510, epoch: 0, batch: 24599, loss: 0.987226545810699, lr: 0.0000040432, speed: 0.69 s/it
+global step 24700/34510, epoch: 0, batch: 24699, loss: 0.944902300834656, lr: 0.0000040024, speed: 0.69 s/it
+global step 24800/34510, epoch: 0, batch: 24799, loss: 0.977187454700470, lr: 0.0000039616, speed: 0.70 s/it
+global step 24900/34510, epoch: 0, batch: 24899, loss: 0.980429649353027, lr: 0.0000039208, speed: 0.70 s/it
+global step 25000/34510, epoch: 0, batch: 24999, loss: 0.957382798194885, lr: 0.0000038800, speed: 0.70 s/it
+global step 25100/34510, epoch: 0, batch: 25099, loss: 0.961464822292328, lr: 0.0000038392, speed: 0.76 s/it
+global step 25200/34510, epoch: 0, batch: 25199, loss: 0.962480425834656, lr: 0.0000037984, speed: 0.69 s/it
+global step 25300/34510, epoch: 0, batch: 25299, loss: 0.937988281250000, lr: 0.0000037576, speed: 0.66 s/it
+global step 25400/34510, epoch: 0, batch: 25399, loss: 0.979081988334656, lr: 0.0000037169, speed: 0.67 s/it
+global step 25500/34510, epoch: 0, batch: 25499, loss: 1.015507817268372, lr: 0.0000036761, speed: 0.73 s/it
+global step 25600/34510, epoch: 0, batch: 25599, loss: 0.987890601158142, lr: 0.0000036353, speed: 0.69 s/it
+global step 25700/34510, epoch: 0, batch: 25699, loss: 0.986249983310699, lr: 0.0000035945, speed: 0.71 s/it
+global step 25800/34510, epoch: 0, batch: 25799, loss: 0.994902312755585, lr: 0.0000035537, speed: 0.71 s/it
+global step 25900/34510, epoch: 0, batch: 25899, loss: 0.939531207084656, lr: 0.0000035129, speed: 0.71 s/it
+global step 26000/34510, epoch: 0, batch: 25999, loss: 0.994277298450470, lr: 0.0000034721, speed: 0.71 s/it
+global step 26100/34510, epoch: 0, batch: 26099, loss: 0.957089841365814, lr: 0.0000034313, speed: 0.76 s/it
+global step 26200/34510, epoch: 0, batch: 26199, loss: 1.003886699676514, lr: 0.0000033905, speed: 0.73 s/it
+global step 26300/34510, epoch: 0, batch: 26299, loss: 0.985214829444885, lr: 0.0000033497, speed: 0.71 s/it
+global step 26400/34510, epoch: 0, batch: 26399, loss: 0.996582031250000, lr: 0.0000033089, speed: 0.75 s/it
+global step 26500/34510, epoch: 0, batch: 26499, loss: 0.933847606182098, lr: 0.0000032681, speed: 0.74 s/it
+global step 26600/34510, epoch: 0, batch: 26599, loss: 0.970917940139771, lr: 0.0000032273, speed: 0.77 s/it
+global step 26700/34510, epoch: 0, batch: 26699, loss: 0.957890629768372, lr: 0.0000031865, speed: 0.90 s/it
+global step 26800/34510, epoch: 0, batch: 26799, loss: 0.985703110694885, lr: 0.0000031457, speed: 0.85 s/it
+global step 26900/34510, epoch: 0, batch: 26899, loss: 0.985644519329071, lr: 0.0000031049, speed: 0.87 s/it
+global step 27000/34510, epoch: 0, batch: 26999, loss: 0.963242173194885, lr: 0.0000030641, speed: 0.87 s/it
+global step 27100/34510, epoch: 0, batch: 27099, loss: 0.935468733310699, lr: 0.0000030233, speed: 0.78 s/it
+global step 27200/34510, epoch: 0, batch: 27199, loss: 0.976093709468842, lr: 0.0000029825, speed: 0.68 s/it
+global step 27300/34510, epoch: 0, batch: 27299, loss: 0.948417961597443, lr: 0.0000029417, speed: 0.72 s/it
+global step 27400/34510, epoch: 0, batch: 27399, loss: 1.020351529121399, lr: 0.0000029009, speed: 0.79 s/it
+global step 27500/34510, epoch: 0, batch: 27499, loss: 0.994160115718842, lr: 0.0000028601, speed: 1.01 s/it
+global step 27600/34510, epoch: 0, batch: 27599, loss: 0.922050774097443, lr: 0.0000028193, speed: 1.08 s/it
+global step 27700/34510, epoch: 0, batch: 27699, loss: 0.966757774353027, lr: 0.0000027785, speed: 1.00 s/it
+global step 27800/34510, epoch: 0, batch: 27799, loss: 0.976523399353027, lr: 0.0000027377, speed: 0.96 s/it
+global step 27900/34510, epoch: 0, batch: 27899, loss: 1.029882788658142, lr: 0.0000026969, speed: 0.83 s/it
+global step 28000/34510, epoch: 0, batch: 27999, loss: 1.005058526992798, lr: 0.0000026561, speed: 0.72 s/it
+global step 28100/34510, epoch: 0, batch: 28099, loss: 1.058183550834656, lr: 0.0000026153, speed: 0.76 s/it
+global step 28200/34510, epoch: 0, batch: 28199, loss: 0.994706988334656, lr: 0.0000025745, speed: 0.71 s/it
+global step 28300/34510, epoch: 0, batch: 28299, loss: 0.996269524097443, lr: 0.0000025337, speed: 0.67 s/it
+global step 28400/34510, epoch: 0, batch: 28399, loss: 0.981347620487213, lr: 0.0000024929, speed: 0.67 s/it
+global step 28500/34510, epoch: 0, batch: 28499, loss: 0.971406221389771, lr: 0.0000024521, speed: 0.67 s/it
+global step 28600/34510, epoch: 0, batch: 28599, loss: 0.994199216365814, lr: 0.0000024113, speed: 0.71 s/it
+global step 28700/34510, epoch: 0, batch: 28699, loss: 1.000625014305115, lr: 0.0000023705, speed: 0.71 s/it
+global step 28800/34510, epoch: 0, batch: 28799, loss: 0.998847663402557, lr: 0.0000023297, speed: 0.73 s/it
+global step 28900/34510, epoch: 0, batch: 28899, loss: 0.942207038402557, lr: 0.0000022889, speed: 0.80 s/it
+global step 29000/34510, epoch: 0, batch: 28999, loss: 1.042871117591858, lr: 0.0000022481, speed: 0.81 s/it
+global step 29100/34510, epoch: 0, batch: 29099, loss: 0.952070295810699, lr: 0.0000022073, speed: 0.82 s/it
+global step 29200/34510, epoch: 0, batch: 29199, loss: 0.901992142200470, lr: 0.0000021665, speed: 0.82 s/it
+global step 29300/34510, epoch: 0, batch: 29299, loss: 1.054238200187683, lr: 0.0000021257, speed: 0.81 s/it
+global step 29400/34510, epoch: 0, batch: 29399, loss: 0.998749971389771, lr: 0.0000020849, speed: 0.79 s/it
+global step 29500/34510, epoch: 0, batch: 29499, loss: 0.969843745231628, lr: 0.0000020441, speed: 0.81 s/it
+global step 29600/34510, epoch: 0, batch: 29599, loss: 1.013378858566284, lr: 0.0000020033, speed: 0.80 s/it
+global step 29700/34510, epoch: 0, batch: 29699, loss: 0.938046872615814, lr: 0.0000019625, speed: 0.81 s/it
+global step 29800/34510, epoch: 0, batch: 29799, loss: 0.998027324676514, lr: 0.0000019217, speed: 0.72 s/it
+global step 29900/34510, epoch: 0, batch: 29899, loss: 1.001777291297913, lr: 0.0000018809, speed: 0.72 s/it
+global step 30000/34510, epoch: 0, batch: 29999, loss: 0.959160149097443, lr: 0.0000018401, speed: 0.70 s/it
+global step 30100/34510, epoch: 0, batch: 30099, loss: 0.960839807987213, lr: 0.0000017993, speed: 0.76 s/it
+global step 30200/34510, epoch: 0, batch: 30199, loss: 0.963867187500000, lr: 0.0000017585, speed: 0.69 s/it
+global step 30300/34510, epoch: 0, batch: 30299, loss: 1.006582021713257, lr: 0.0000017177, speed: 0.67 s/it
+global step 30400/34510, epoch: 0, batch: 30399, loss: 0.949941396713257, lr: 0.0000016769, speed: 0.67 s/it
+global step 30500/34510, epoch: 0, batch: 30499, loss: 0.997773408889771, lr: 0.0000016361, speed: 0.71 s/it
+global step 30600/34510, epoch: 0, batch: 30599, loss: 0.991796851158142, lr: 0.0000015953, speed: 0.72 s/it
+global step 30700/34510, epoch: 0, batch: 30699, loss: 0.995546877384186, lr: 0.0000015545, speed: 0.72 s/it
+global step 30800/34510, epoch: 0, batch: 30799, loss: 0.961269497871399, lr: 0.0000015137, speed: 0.72 s/it
+global step 30900/34510, epoch: 0, batch: 30899, loss: 1.009042978286743, lr: 0.0000014729, speed: 0.71 s/it
+global step 31000/34510, epoch: 0, batch: 30999, loss: 0.963847637176514, lr: 0.0000014321, speed: 0.73 s/it
+global step 31100/34510, epoch: 0, batch: 31099, loss: 1.024140596389771, lr: 0.0000013913, speed: 0.76 s/it
+global step 31200/34510, epoch: 0, batch: 31199, loss: 0.997363269329071, lr: 0.0000013505, speed: 0.72 s/it
+global step 31300/34510, epoch: 0, batch: 31299, loss: 0.936660110950470, lr: 0.0000013097, speed: 0.72 s/it
+global step 31400/34510, epoch: 0, batch: 31399, loss: 1.019042968750000, lr: 0.0000012689, speed: 0.73 s/it
+global step 31500/34510, epoch: 0, batch: 31499, loss: 0.983535110950470, lr: 0.0000012281, speed: 0.75 s/it
+global step 31600/34510, epoch: 0, batch: 31599, loss: 0.969140589237213, lr: 0.0000011873, speed: 0.75 s/it
+global step 31700/34510, epoch: 0, batch: 31699, loss: 1.001503825187683, lr: 0.0000011465, speed: 0.72 s/it
+global step 31800/34510, epoch: 0, batch: 31799, loss: 1.015917897224426, lr: 0.0000011057, speed: 0.75 s/it
+global step 31900/34510, epoch: 0, batch: 31899, loss: 0.997187495231628, lr: 0.0000010649, speed: 0.74 s/it
+global step 32000/34510, epoch: 0, batch: 31999, loss: 1.009843707084656, lr: 0.0000010241, speed: 0.74 s/it
+global step 32100/34510, epoch: 0, batch: 32099, loss: 0.911445319652557, lr: 0.0000009833, speed: 0.80 s/it
+global step 32200/34510, epoch: 0, batch: 32199, loss: 0.951718747615814, lr: 0.0000009425, speed: 0.76 s/it
+global step 32300/34510, epoch: 0, batch: 32299, loss: 0.977382779121399, lr: 0.0000009017, speed: 0.79 s/it
+global step 32400/34510, epoch: 0, batch: 32399, loss: 0.939609348773956, lr: 0.0000008609, speed: 0.77 s/it
+global step 32500/34510, epoch: 0, batch: 32499, loss: 1.019257783889771, lr: 0.0000008201, speed: 0.77 s/it
+global step 32600/34510, epoch: 0, batch: 32599, loss: 1.000097632408142, lr: 0.0000007793, speed: 1.16 s/it
+global step 32700/34510, epoch: 0, batch: 32699, loss: 0.965878903865814, lr: 0.0000007385, speed: 1.43 s/it
+global step 32800/34510, epoch: 0, batch: 32799, loss: 0.987050771713257, lr: 0.0000006977, speed: 0.81 s/it
+global step 32900/34510, epoch: 0, batch: 32899, loss: 0.997773408889771, lr: 0.0000006569, speed: 0.77 s/it
+global step 33000/34510, epoch: 0, batch: 32999, loss: 0.995937466621399, lr: 0.0000006161, speed: 0.76 s/it
+global step 33100/34510, epoch: 0, batch: 33099, loss: 0.956679642200470, lr: 0.0000005753, speed: 0.85 s/it
+global step 33200/34510, epoch: 0, batch: 33199, loss: 0.990234375000000, lr: 0.0000005345, speed: 0.78 s/it
+global step 33300/34510, epoch: 0, batch: 33299, loss: 0.968984365463257, lr: 0.0000004937, speed: 0.87 s/it
+global step 33400/34510, epoch: 0, batch: 33399, loss: 0.966796875000000, lr: 0.0000004529, speed: 0.74 s/it
+global step 33500/34510, epoch: 0, batch: 33499, loss: 1.014179706573486, lr: 0.0000004121, speed: 0.66 s/it
+global step 33600/34510, epoch: 0, batch: 33599, loss: 0.928164064884186, lr: 0.0000003713, speed: 0.67 s/it
+global step 33700/34510, epoch: 0, batch: 33699, loss: 0.993320286273956, lr: 0.0000003305, speed: 0.70 s/it
+global step 33800/34510, epoch: 0, batch: 33799, loss: 0.941523432731628, lr: 0.0000002897, speed: 0.71 s/it
+global step 33900/34510, epoch: 0, batch: 33899, loss: 0.956015586853027, lr: 0.0000002489, speed: 0.72 s/it
+global step 34000/34510, epoch: 0, batch: 33999, loss: 1.015312433242798, lr: 0.0000002081, speed: 0.73 s/it
+global step 34100/34510, epoch: 0, batch: 34099, loss: 0.971523404121399, lr: 0.0000001673, speed: 0.81 s/it
+global step 34200/34510, epoch: 0, batch: 34199, loss: 0.936093747615814, lr: 0.0000001265, speed: 0.73 s/it
+global step 34300/34510, epoch: 0, batch: 34299, loss: 0.943203091621399, lr: 0.0000000857, speed: 0.74 s/it
+global step 34400/34510, epoch: 0, batch: 34399, loss: 0.985039055347443, lr: 0.0000000449, speed: 0.75 s/it
+global step 34500/34510, epoch: 0, batch: 34499, loss: 0.956835925579071, lr: 0.0000000041, speed: 0.75 s/it
+INFO 2021-09-13 16:19:24,519 launch.py:268] Local processes completed.
