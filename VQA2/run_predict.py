@@ -11,8 +11,7 @@ from paddle.io import DataLoader
 from paddlenlp.data import Dict, Pad
 from paddlenlp.datasets import load_dataset
 from paddlenlp.transformers import BertTokenizer
-from paddlenlp.transformers.visual_bert.modeling import \
-    VisualBertForQuestionAnswering
+from paddlenlp.transformers import VisualBertForQuestionAnswering
 from tqdm import tqdm
 
 parser = argparse.ArgumentParser(description=__doc__)
@@ -36,7 +35,7 @@ parser.add_argument(
         "--batch_size",
         type=int,
         required=False,
-        default=1,
+        default=32,
         help="Batch images")
 
 parser.add_argument(
@@ -151,7 +150,7 @@ def prepare_test_features_single(example, tokenizer, args):
         label = example['label']
     
     if "train" in feature_path:
-        folder = osp.join(data_root, "fc6/vqa/train2014")
+        folder = osp.join(data_root, "fc6/vqa/trai n2014")
     elif "val" in feature_path:
         folder = osp.join(data_root, "fc6/vqa/val2014")
     elif "test" in feature_path:
@@ -163,7 +162,8 @@ def prepare_test_features_single(example, tokenizer, args):
     visual_attention_mask = paddle.ones(visual_embeds.shape[:-1], dtype=paddle.int64)
     
     # one sentence for inferencing: (a) Question ? [MASK]
-    question_subword_tokens = question_tokens + ["?", "[MASK]"]
+    question_subword_tokens = tokenizer.tokenize(" ".join(question_tokens))
+    question_subword_tokens = question_subword_tokens + ["?", "[MASK]"]
     bert_feature = tokenizer.encode(question_subword_tokens, return_attention_mask=True)
     
     data = {
@@ -215,7 +215,7 @@ test_data_loader = DataLoader(
     dataset=test_ds,
     batch_sampler=test_batch_sampler,
     collate_fn=test_batchify_fn,
-    num_workers=0,
+    num_workers=8,
     return_list=True,
 )
 
@@ -253,5 +253,9 @@ with paddle.no_grad():
             logits = output['logits']
         for idx in range(logits.shape[0]):
             all_logits.append(logits.numpy()[idx])
+            # with open("logits_paddle.log", 'a') as f: #TODO
+            #     line = "{}\n".format(logits.numpy()[idx].max())
+            #     f.write(line)
+            #     f.flush()
 
     generate_test_file(all_logits, test_ds.data, answer_dict, "result.json")
