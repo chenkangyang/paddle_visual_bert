@@ -24,7 +24,7 @@ max_steps: -1
 model_name_or_path: visualbert-vqa-pre
 model_type: visualbert
 num_train_epochs: 1
-output_dir: ./logs/vqa-pre-wo-leak-again-again
+output_dir: ./logs/vqa-pre
 save_steps: 5000
 seed: 42
 train_batch_size: 16
@@ -35,7 +35,7 @@ weight_decay: 0.01
 [32m[2021-09-19 23:46:41,827] [    INFO][0m - Already cached /home/chenkangyang/.paddlenlp/models/bert-base-uncased/bert-base-uncased-vocab.txt[0m
 [32m[2021-09-19 23:46:41,849] [    INFO][0m - Already cached /home/chenkangyang/.paddlenlp/models/visualbert-vqa-pre/visualbert-vqa-pre.pdparams[0m
 W0919 23:46:41.850903 24278 device_context.cc:404] Please NOTE: device: 8, GPU Compute Capability: 6.1, Driver API Version: 10.2, Runtime API Version: 10.2
-W0919 23:46:41.856477 24278 device_context.cc:422] device: 8, cuDNN Version: 7.6.
+W0919 23:46:41.856477 24278 device_context.cc:422] device: 3, cuDNN Version: 7.6.
 start load data : 2021-09-19 23:46:48
 2021-09-19 23:46:48,768-INFO: unique_endpoints {'127.0.0.1:60647'}
 load data done, total : 6.138714790344238 s
