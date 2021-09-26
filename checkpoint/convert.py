@@ -4,15 +4,15 @@ import torch
 paddle.set_device("cpu")
 
 model_pair_list = [
-            ["./uclanlp/visualbert-vqa/pytorch_model.bin", "./paddle_visualbert/visualbert-vqa.pdparams"],
-            ["./uclanlp/visualbert-vqa-pre/pytorch_model.bin", "./paddle_visualbert/visualbert-vqa-pre.pdparams"],
-            ["./uclanlp/visualbert-vqa-coco-pre/pytorch_model.bin", "./paddle_visualbert/visualbert-vqa-coco-pre.pdparams"],
-            ["./uclanlp/visualbert-nlvr2/pytorch_model.bin", "./paddle_visualbert/visualbert-nlvr2.pdparams"],
-            ["./uclanlp/visualbert-nlvr2-pre/pytorch_model.bin", "./paddle_visualbert/visualbert-nlvr2-pre.pdparams"],
-            ["./uclanlp/visualbert-nlvr2-coco-pre/pytorch_model.bin", "./paddle_visualbert/visualbert-nlvr2-coco-pre.pdparams"],
-            ["./uclanlp/visualbert-vcr/pytorch_model.bin", "./paddle_visualbert/visualbert-vcr.pdparams"],
-            ["./uclanlp/visualbert-vcr-pre/pytorch_model.bin", "./paddle_visualbert/visualbert-vcr-pre.pdparams"],
-            ["./uclanlp/visualbert-vcr-coco-pre/pytorch_model.bin", "./paddle_visualbert/visualbert-vcr-coco-pre.pdparams"],
+            ["./uclanlp/visualbert-vqa/pytorch_model.bin", "./paddle_visualbert/visualbert-vqa/model_state.pdparams"],
+            ["./uclanlp/visualbert-vqa-pre/pytorch_model.bin", "./paddle_visualbert/visualbert-vqa-pre/model_state.pdparams"],
+            ["./uclanlp/visualbert-vqa-coco-pre/pytorch_model.bin", "./paddle_visualbert/visualbert-vqa-coco-pre/model_state.pdparams"],
+            ["./uclanlp/visualbert-nlvr2/pytorch_model.bin", "./paddle_visualbert/visualbert-nlvr2/model_state.pdparams"],
+            ["./uclanlp/visualbert-nlvr2-pre/pytorch_model.bin", "./paddle_visualbert/visualbert-nlvr2-pre/model_state.pdparams"],
+            ["./uclanlp/visualbert-nlvr2-coco-pre/pytorch_model.bin", "./paddle_visualbert/visualbert-nlvr2-coco-pre/model_state.pdparams"],
+            ["./uclanlp/visualbert-vcr/pytorch_model.bin", "./paddle_visualbert/visualbert-vcr/model_state.pdparams"],
+            ["./uclanlp/visualbert-vcr-pre/pytorch_model.bin", "./paddle_visualbert/visualbert-vcr-pre/model_state.pdparams"],
+            ["./uclanlp/visualbert-vcr-coco-pre/pytorch_model.bin", "./paddle_visualbert/visualbert-vcr-coco-pre/model_state.pdparams"],
         ]
 
 # State_dict's keys mapping: from torch to paddle

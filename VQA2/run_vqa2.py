@@ -247,7 +247,70 @@ def set_seed(args):
     # `paddle.seed(args.seed + paddle.distributed.get_rank())`
     paddle.seed(args.seed)
 
+def masked_unk_softmax(x, dim, mask_idx):
+    x1 = paddle.nn.functional.softmax(x, axis=dim)
+    x1[:, mask_idx] = 0
+    x1_sum = paddle.sum(x1, axis=1, keepdim=True)
+    y = x1 / x1_sum
+    return y
 
+def compute_score_with_logits(logits, labels):
+    logits = masked_unk_softmax(logits, 1, 0)
+    logits = paddle.argmax(logits, 1)  # argmax
+    # one_hots = paddle.zeros_like(labels)
+    one_hots = paddle.nn.functional.one_hot(logits, num_classes=labels.shape[1])
+    scores = (one_hots * labels)
+    return scores
+
+@paddle.no_grad()
+def evaluate_vqa(model, data_loader):
+    model.eval()
+    val_probs = []
+    val_labels = []
+    val_loss_sum = 0
+    val_counter = 0
+    # for batch in tqdm(data_loader, desc="Evaluate VQA2 on minival2014"):
+    for idx, batch in enumerate(data_loader):
+        return_dict = False
+        labels = batch[6]
+        inputs = {
+            "input_ids": batch[0],
+            "token_type_ids": batch[1],
+            "attention_mask": batch[2],
+            "visual_embeds": batch[3],
+            "visual_token_type_ids": batch[4],
+            "visual_attention_mask": batch[5],
+            "labels": batch[6],
+            "return_dict": return_dict
+        }
+        outputs = model(**inputs)
+        loss = outputs[0]
+        logits = outputs[1]
+        # _batch_acc = paddle.sum(compute_score_with_logits(logits, labels)) / labels.shape[0]
+        val_loss_sum += loss.mean() * labels.shape[0]
+        val_counter += labels.shape[0]
+        val_probs.append(logits.detach().cpu().numpy())
+        val_labels.append(labels.detach().cpu().numpy())
+        # if (idx+1) % 200 == 0:
+        #     print("eval batch:{}/{} batch_acc: {}, _batch_loss: {}".format(idx+1, len(data_loader), _batch_acc.detach().cpu().numpy(), loss.mean().detach().cpu().numpy()))
+            
+    # val_acc_avg /= val_counter
+    # print("val_acc_avg", val_acc_avg.detach().cpu().numpy())
+    val_loss_avg = val_loss_sum / val_counter
+    val_loss_avg = val_loss_avg.detach().cpu().numpy()
+    val_probs = np.concatenate(val_probs, 0)
+    val_labels = np.concatenate(val_labels, 0)
+    val_acc_avg = paddle.sum(compute_score_with_logits(paddle.to_tensor(val_probs), paddle.to_tensor(val_labels))) / val_labels.shape[0]
+    val_acc_avg = val_acc_avg.detach().cpu().numpy()
+    print(
+            "eval loss: %f, acc: %s"
+            % (
+                val_loss_avg,
+                val_acc_avg,
+                ),
+            )
+    model.train()
+    
 @paddle.no_grad()
 def evaluate(model, loss_fct, metric, data_loader):
     model.eval()
@@ -300,7 +363,7 @@ def prepare_train_features_single(example, tokenizer, answer_dict, args):
     feature_path = example['feature_path']
     question_str = example['question_str']
     question_tokens = example['question_tokens']
-    ocr_tokens = example['ocr_tokens']
+    # ocr_tokens = example['ocr_tokens']
     answers = example['answers']
 
     # generate label
@@ -386,7 +449,7 @@ def do_train(args):
 
     # ===================================================================
 
-    train_ds = load_dataset('vqa2', splits="train")
+    train_ds = load_dataset('vqa2', splits="trainval")
     answers_vqa_fullname = train_ds.vocab_info['filepath']
     answer_dict = VocabDict(answers_vqa_fullname)
     tokenizer = tokenizer_class.from_pretrained(args.bert_model_name)
@@ -417,7 +480,7 @@ def do_train(args):
         num_workers=0,
         return_list=True)
     
-    dev_ds = load_dataset('vqa2', splits='val')
+    dev_ds = load_dataset('vqa2', splits='minival')
     dev_ds = dev_ds.map(trans_func, lazy=True)
     dev_batch_sampler = paddle.io.BatchSampler(
         dev_ds, batch_size=args.batch_size, shuffle=False)
@@ -510,7 +573,8 @@ def do_train(args):
             if global_step % args.save_steps == 0 or global_step == num_training_steps:
                 tic_eval = time.time()
                 
-                evaluate(model, loss_fct, metric, dev_data_loader)
+                # evaluate(model, loss_fct, metric, dev_data_loader)
+                evaluate_vqa(model, dev_data_loader)
                 print("eval done total : %s s" % (time.time() - tic_eval))
                 
                 if paddle.distributed.get_rank() == 0:
