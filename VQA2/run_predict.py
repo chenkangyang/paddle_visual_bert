@@ -252,9 +252,5 @@ with paddle.no_grad():
             logits = output['logits']
         for idx in range(logits.shape[0]):
             all_logits.append(logits.numpy()[idx])
-            # with open("logits_paddle.log", 'a') as f: #TODO
-            #     line = "{}\n".format(logits.numpy()[idx].max())
-            #     f.write(line)
-            #     f.flush()
 
     generate_test_file(all_logits, test_ds.data, answer_dict, "result.json")
