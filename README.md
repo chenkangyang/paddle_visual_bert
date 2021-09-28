@@ -269,11 +269,9 @@ Final acc 0.6747350329418504
 ## 快速开始
 ```bash
 # 克隆本仓库
-git clone https://github.com/chenkangyang/paddle_visual_bert.git
+git clone --recurse-submodules https://github.com/chenkangyang/paddle_visual_bert.git
 # 进入PaddleNLP目录
 cd PaddleNLP
-在项目外某位置 git clone https://github.com/chenkangyang/PaddleNLP.git 
-
 # 本地安装
 pip install -r requirements.txt
 # coco 数据的读取需要额外安装工具: pycocotools
