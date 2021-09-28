@@ -1,33 +1,25 @@
 text_masked = "The capital of France is {mask}."
 text = "The capital of France is Paris."
 
-torch_model_name = "uclanlp/visualbert-nlvr2-coco-pre"
-paddle_model_name = "visualbert-nlvr2-coco-pre"
+torch_model_name = "bert-base-uncased"
+paddle_model_name = "bert-base-uncased"
 
 import numpy as np
 import paddle
 import torch
 from paddlenlp.transformers import BertTokenizer as PDBertTokenizer
 from paddlenlp.transformers import \
-    VisualBertForPreTraining as PDVisualBertForPreTraining
+    BertForPretraining as PDBertForPretraining
 from transformers import BertTokenizer as PTBertTokenizer
-from transformers import VisualBertForPreTraining as PTVisualBertForPreTraining
+from transformers import BertForPreTraining as PTBertForPretraining
 
-torch_model = PTVisualBertForPreTraining.from_pretrained("../checkpoint/" + torch_model_name)
+torch_model = PTBertForPretraining.from_pretrained("../checkpoint/" + torch_model_name)
 torch_tokenizer = PTBertTokenizer.from_pretrained("../checkpoint/bert-base-uncased")
 torch_model.eval()
 
 torch_inputs = torch_tokenizer(text_masked, return_tensors="pt", max_length=128, padding="max_length")
-torch_visual_embeds = torch.ones([100,1024]).unsqueeze(0)
-torch_visual_token_type_ids = torch.ones(torch_visual_embeds.shape[:-1], dtype=torch.int64)
-torch_visual_attention_mask = torch.ones(torch_visual_embeds.shape[:-1], dtype=torch.int64)
-torch_inputs.update({
-    "visual_embeds": torch_visual_embeds,
-    "visual_token_type_ids": torch_visual_token_type_ids,
-    "visual_attention_mask": torch_visual_attention_mask
-})
 
-max_length  = torch_inputs["input_ids"].shape[-1] + torch_visual_embeds.shape[-2]
+max_length  = torch_inputs["input_ids"].shape[-1]
 torch_labels = torch_tokenizer(text, return_tensors="pt", padding="max_length", max_length=max_length)["input_ids"]
 torch_sentence_image_labels = torch.tensor(1).unsqueeze(0) # Batch_size
 
@@ -45,7 +37,7 @@ print("torch_seq_relationship_logits shape:{}".format(torch_seq_relationship_log
 print("torch_seq_relationship_logits:{}".format(torch_seq_relationship_logits))
 
 # ========================================================================================================
-paddle_model = PDVisualBertForPreTraining.from_pretrained(paddle_model_name)
+paddle_model = PDBertForPretraining.from_pretrained(paddle_model_name)
 paddle_tokenizer = PDBertTokenizer.from_pretrained("bert-base-uncased")
 paddle_model.eval()
 
@@ -53,7 +45,7 @@ paddle_inputs = paddle_tokenizer(text_masked, max_seq_len=128, pad_to_max_seq_le
 paddle_inputs['input_ids'] = paddle.to_tensor([paddle_inputs['input_ids']])
 paddle_inputs['token_type_ids'] = paddle.to_tensor([paddle_inputs['token_type_ids']])
 paddle_inputs['attention_mask'] = paddle.to_tensor([paddle_inputs['attention_mask']])
-paddle_visual_embeds = paddle.ones([100,1024]).unsqueeze(0)
+paddle_visual_embeds = paddle.ones([100,2048]).unsqueeze(0)
 paddle_visual_token_type_ids = paddle.ones(paddle_visual_embeds.shape[:-1], dtype=paddle.int64)
 paddle_visual_attention_mask = paddle.ones(paddle_visual_embeds.shape[:-1], dtype=paddle.int64)
 
@@ -94,5 +86,4 @@ prediction_logits_diff = torch_prediction_logits - paddle_prediction_logits
 seq_relationship_logits = torch_seq_relationship_logits - paddle_seq_relationship_logits
 
 print("prediction_logits_diff", np.amax(abs(prediction_logits_diff)))
-print("prediction_logits_diff_mean", abs(prediction_logits_diff).mean())
 print("seq_relationship_logits_diff", np.amax(abs(seq_relationship_logits)))

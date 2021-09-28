@@ -94,4 +94,5 @@ prediction_logits_diff = torch_prediction_logits - paddle_prediction_logits
 seq_relationship_logits = torch_seq_relationship_logits - paddle_seq_relationship_logits
 
 print("prediction_logits_diff", np.amax(abs(prediction_logits_diff)))
+print("prediction_logits_diff_mean", abs(prediction_logits_diff).mean())
 print("seq_relationship_logits_diff", np.amax(abs(seq_relationship_logits)))
