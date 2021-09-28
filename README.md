@@ -954,8 +954,8 @@ python -m paddle.distributed.launch --gpus "1,2" --log_dir $LOG_DIR NLVR2/run_nl
 ├── checkpoint # 权重文件
 │   ├── bert-base-uncased # BERTTokenizer 权重文件
 │   ├── convert.py # pytorch --> paddle 权重转换代码
-│   ├── paddle_visualbert # paddle 权重文件
-│   └── uclanlp # pytorch 权重文件
+│   ├── paddle_visualbert # paddle 9个权重文件夹
+│   └── uclanlp # pytorch 9个权重文件夹
 ├── compare # 模型精度对齐
 │   ├── compare_nlvr2_coco_pre.py
 │   ├── compare_nlvr2_pre.py
@@ -1003,8 +1003,8 @@ python -m paddle.distributed.launch --gpus "1,2" --log_dir $LOG_DIR NLVR2/run_nl
 提取码：7s29 
 --来自百度网盘超级会员V5的分享
 
-`coco_detectron_fix_100`: `X_COCO/data/detectron_fix_100` 经过分卷压缩，包含 `.part00`~`.part32` 33 个压缩文件，每个2G，是`pddlenlp.dataset.coco_captions`和`pddlenlp.dataset.vqa2`数据集对应的图像特征
-`coco_detectron_fix_144`: `X_COCO/data/detectron_fix_144` 经过分卷压缩，包含 `.part00`~`.part14` 15 个压缩文件，每个2G，是`pddlenlp.dataset.coco_captions`和`pddlenlp.dataset.nlvr2`数据集对应的图像特征
+`coco_detectron_fix_100`: `X_COCO/data/detectron_fix_100` 经过分卷压缩，包含 `.part00`-`.part32` 33 个压缩文件，每个2G，是`pddlenlp.dataset.coco_captions`和`pddlenlp.dataset.vqa2`数据集对应的图像特征
+`coco_detectron_fix_144`: `X_COCO/data/detectron_fix_144` 经过分卷压缩，包含 `.part00`-`.part14` 15 个压缩文件，每个2G，是`pddlenlp.dataset.coco_captions`和`pddlenlp.dataset.nlvr2`数据集对应的图像特征
 
 **（2）NLVR 图像特征**
 `X_NLVR` : 下载链接
@@ -1050,7 +1050,7 @@ python -m paddle.distributed.launch --gpus "1,2" --log_dir $LOG_DIR NLVR2/run_nl
 或者软连接到转换好的模型权重上
 `.paddlenlp/models/visualbert-vqa/visualbert-vqa.pdparams -> ${workspaceFolder}/checkpoint/paddle_visualbert/visualbert-vqa/model_state.pdparams`
 
-例子如下：
+`.paddlenlp/models` 例子如下：
 ```bash
 .
 ├── bert-base-cased
@@ -1064,24 +1064,24 @@ python -m paddle.distributed.launch --gpus "1,2" --log_dir $LOG_DIR NLVR2/run_nl
 │   ├── ernie_v1_chn_base.pdparams
 │   └── vocab.txt
 ├── visualbert-nlvr2
-│   └── visualbert-nlvr2.pdparams -> ${workspaceFolder}/checkpoint/paddle_visualbert/visualbert-nlvr2.pdparams
+│   └── visualbert-nlvr2.pdparams -> $(workspace)/paddle_visual_bert/checkpoint/paddle_visualbert/visualbert-nlvr2/model_state.pdparams
 ├── visualbert-nlvr2-coco-pre
-│   └── visualbert-nlvr2-coco-pre.pdparams -> ${workspaceFolder}/checkpoint/paddle_visualbert/visualbert-nlvr2-coco-pre.pdparams
+│   └── visualbert-nlvr2-coco-pre.pdparams -> $(workspace)/paddle_visual_bert/checkpoint/paddle_visualbert/visualbert-nlvr2-coco-pre/model_state.pdparams
 ├── visualbert-nlvr2-pre
-│   └── visualbert-nlvr2-pre.pdparams -> ${workspaceFolder}/checkpoint/paddle_visualbert/visualbert-nlvr2-pre.pdparams
-├── visualbert-nvlr2
+│   └── visualbert-nlvr2-pre.pdparams -> $(workspace)/paddle_visual_bert/checkpoint/paddle_visualbert/visualbert-nlvr2-pre/model_state.pdparams
 ├── visualbert-vcr
-│   └── visualbert-vcr.pdparams -> ${workspaceFolder}/checkpoint/paddle_visualbert/visualbert-vcr.pdparams
+│   └── visualbert-vcr.pdparams -> $(workspace)/paddle_visual_bert/checkpoint/paddle_visualbert/visualbert-vcr/model_state.pdparams
 ├── visualbert-vcr-coco-pre
-│   └── visualbert-vcr-coco-pre.pdparams -> ${workspaceFolder}/checkpoint/paddle_visualbert/visualbert-vcr-coco-pre.pdparams
+│   └── visualbert-vcr-coco-pre.pdparams -> $(workspace)/paddle_visual_bert/checkpoint/paddle_visualbert/visualbert-vcr-coco-pre/model_state.pdparams
 ├── visualbert-vcr-pre
-│   └── visualbert-vcr-pre.pdparams -> ${workspaceFolder}/checkpoint/paddle_visualbert/visualbert-vcr-pre.pdparams
+│   └── visualbert-vcr-pre.pdparams -> $(workspace)/paddle_visual_bert/checkpoint/paddle_visualbert/visualbert-vcr-pre/model_state.pdparams
 ├── visualbert-vqa
-│   └── visualbert-vqa.pdparams -> ${workspaceFolder}/checkpoint/paddle_visualbert/visualbert-vqa.pdparams
+│   └── visualbert-vqa.pdparams -> $(workspace)/paddle_visual_bert/checkpoint/paddle_visualbert/visualbert-vqa/model_state.pdparams
 ├── visualbert-vqa-coco-pre
-│   └── visualbert-vqa-coco-pre.pdparams -> ${workspaceFolder}/checkpoint/paddle_visualbert/visualbert-vqa-coco-pre.pdparams
+│   └── visualbert-vqa-coco-pre.pdparams -> $(workspace)/paddle_visual_bert/checkpoint/paddle_visualbert/visualbert-vqa-coco-pre/model_state.pdparams
 └── visualbert-vqa-pre
-    └── visualbert-vqa-pre.pdparams -> ${workspaceFolder}/checkpoint/paddle_visualbert/visualbert-vqa-pre.pdparams
+    └── visualbert-vqa-pre.pdparams -> $(workspace)/paddle_visual_bert/checkpoint/paddle_visualbert/visualbert-vqa-pre/model_state.pdparams
+
 ```
 
 `datasets/COCOCaptions` : [下载链接](https://pan.baidu.com/s/1tkGLibr5frn5Zc3wzlQmoA) 提取码：bfqn 
