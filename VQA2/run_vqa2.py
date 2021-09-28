@@ -288,6 +288,7 @@ def evaluate_vqa(model, data_loader):
         logits = outputs[1]
         # _batch_acc = paddle.sum(compute_score_with_logits(logits, labels)) / labels.shape[0]
         val_loss_sum += loss.mean() * labels.shape[0]
+        val_loss_sum = val_loss_sum.detach().cpu()
         val_counter += labels.shape[0]
         val_probs.append(logits.detach().cpu().numpy())
         val_labels.append(labels.detach().cpu().numpy())
@@ -300,6 +301,7 @@ def evaluate_vqa(model, data_loader):
     val_loss_avg = val_loss_avg.detach().cpu().numpy()
     val_probs = np.concatenate(val_probs, 0)
     val_labels = np.concatenate(val_labels, 0)
+    
     val_acc_avg = paddle.sum(compute_score_with_logits(paddle.to_tensor(val_probs), paddle.to_tensor(val_labels))) / val_labels.shape[0]
     val_acc_avg = val_acc_avg.detach().cpu().numpy()
     print(

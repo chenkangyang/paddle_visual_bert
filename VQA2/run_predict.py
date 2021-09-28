@@ -143,7 +143,6 @@ def prepare_test_features_single(example, tokenizer, args):
     feature_path = example['feature_path']
     question_str = example['question_str']
     question_tokens = example['question_tokens']
-    ocr_tokens = example['ocr_tokens']
 
     if args.mode != "test":
         answers = example['answers']
