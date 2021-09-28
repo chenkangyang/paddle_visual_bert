@@ -130,3 +130,5 @@ dmypy.json
 *.pdparams
 *.th
 *.vscode
+*.npy
+*.tar.gz
