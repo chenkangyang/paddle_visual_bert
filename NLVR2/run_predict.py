@@ -8,9 +8,7 @@ import paddle
 from paddle.io import DataLoader
 from paddlenlp.data import Dict, Pad
 from paddlenlp.datasets import load_dataset
-from paddlenlp.transformers import BertTokenizer
-from paddlenlp.transformers.visual_bert.modeling import \
-    VisualBertForVisualReasoning
+from paddlenlp.transformers import BertTokenizer, VisualBertForVisualReasoning
 from tqdm import tqdm
 
 parser = argparse.ArgumentParser(description=__doc__)
