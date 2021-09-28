@@ -22,7 +22,8 @@
 4. 迁移任务：视觉问答、视觉推理
 
 
-## 原论文效果
+**原论文测试集效果：**
+
 VQA数据集2017 visual question answering
 
 ![VQA](assets/img/image-20210825160729799.png)
@@ -31,58 +32,114 @@ NLVR数据集2019 natural language for visual reasoning
 ![NLVR](assets/img/image-20210825161029089.png)
 
 
-## VQA2 测试集精度复现效果
+## VQA2 验证集精度复现效果
+
+用于做下游任务finetune过程对齐，不在验收标准内
+
+| 验证集 | minival | 
+| -----  | -------- |
+| 原模型 |   0.82541   |
+| Paddle复现 |  0.82034  |
+
+论文中未公布验证集精度，使用`uclanlp/visualbert-vqa`在验证集上测试 `acc=0.82697`，[测试log](https://github.com/chenkangyang/visualbert/blob/kk/logs/vqa_finetune/run_0.log)
+
+1. 使用原仓库代码和配置文件，从`uclanlp/visualbert-vqa-pre`finetune 10个epoch，`acc=0.82541`，单卡3090，显存20G，[原始代码finetune日志](https://github.com/chenkangyang/visualbert/blob/kk/logs/vqa_finetune_0926/run_0.log)
+> Val epoch 8 has acc 0.82541 and loss 1.65776
+
+2. 使用paddle复现，并从`paddle_visualbert/visualbert-vqa-pre` **finetune** 10个epoch，`acc=0.8203476`, 单卡1080Ti，显存12G
+> eval loss: 1.681629, acc: [0.8203476]
+运行以下脚本
+```bash
+sh vqa-finetune.sh
+```
+
+单卡 1080Ti，训练10个epoch，完整结果见网盘：
+> 链接：https://pan.baidu.com/s/1Cci0wLT_roayj2e1KkmZvw 
+提取码：m973 
+--来自百度网盘超级会员V5的分享
+
+## Paddle VQA2 测试集结果 For 验收
 
 | 测试集 | Test-Dev | Test-Std |
 | -----  | -------- | -------- |
 | 原模型 |   70.81   |  71.01  |
-| Paddle复现 |  70.81  |  71.01  |
+| Paddle复现 |  70.65  |  71.05  |
+
+
+选择**finetune**过程中表现较好的模型`vqa2_ft_model_102830.pdparams`(可在上述网盘链接中下载)，运行以下脚本生成`result.json`，提交到竞赛网站
 
 ```bash
 cd VQA2
-python run_predict.py
+CUDA_VISIBLE_DEVICES=0 python run_predict.py --model_name_or_path ../logs/vqa/vqa2_ft_model_102830.pdparams
 ```
 
-### Paddle Test-Dev 复现效果
+> `result.json`
+链接：https://pan.baidu.com/s/14w-FUuTVouq-kdBO-DooAw 
+提取码：urwt 
+--来自百度网盘超级会员V5的分享
+
+**finetune** 配置如下：
+```
+-----------  Configuration Arguments -----------
+adam_epsilon: 1e-06
+batch_size: 64
+bert_model_name: bert-base-uncased
+device: gpu
+input_dir: ./X_COCO/
+learning_rate: 2e-05
+logging_steps: 100
+max_seq_length: 128
+max_steps: -1
+model_name_or_path: checkpoint/paddle_visualbert/visualbert-vqa-pre
+model_type: visualbert
+num_train_epochs: 10
+output_dir: ./logs/vqa
+save_steps: 10000
+scale_loss: 32768
+seed: 42
+task_name: vqa2
+use_amp: False
+warmup_proportion: 0.1
+warmup_steps: 0
+weight_decay: 0.0
+```
+
+### （1）Paddle VQA2 Test-Dev 复现效果
 
 提交`result.json`到评测系统 [VQA Chanllenge 2021](https://eval.ai/web/challenges/challenge-page/830/)
 
 
-> `result.json`链接：https://pan.baidu.com/s/1MgxzlONWe0dfbZhriuW5QA 
-提取码：dzll 
---来自百度网盘超级会员V5的分享
-
 ![Test-Dev Submission Page](assets/img/my_submission_page_test_dev.png)
 
-Test-Dev 数据集测评结果 Sdtout file：复现 Overall 精度达到 `70.81`
+Test-Dev 数据集测评结果 Sdtout file：复现 Overall 精度达到 `70.65`
 ![Test-Dev STDOUT via paddle](assets/img/stdout_paddle_test_dev.png)
 
-Test-Dev 三个结果文件对应链接: [Submitted file](https://evalai.s3.amazonaws.com/media/submission_files/submission_156867/a9515a5e-b659-4b95-b3f7-2f9681934afd.json), [Result file](https://evalai.s3.amazonaws.com/media/submission_files/submission_156867/962917ba-ae5e-41b4-a620-662ddf58120e.json), [Stdout file](https://evalai.s3.amazonaws.com/media/submission_files/submission_156867/a21b73c3-2b4d-4122-8ee9-ec08a4cacc59.txt)
+Test-Dev 三个结果文件对应链接: [Submitted file](https://evalai.s3.amazonaws.com/media/submission_files/submission_158590/7c161873-8a7d-499e-8870-5886cf5caf02.json), [Result file](https://evalai.s3.amazonaws.com/media/submission_files/submission_158590/6f8921ed-168f-4e9f-ab75-d986952ff5f6.json), [Stdout file](https://evalai.s3.amazonaws.com/media/submission_files/submission_158590/bb580e05-92ed-4ea5-9a53-13fb9fe7de1b.txt)
 
 
-检查本地文件和远程文件[Submitted file](https://evalai.s3.amazonaws.com/media/submission_files/submission_155504/1d344aa6-5294-4b03-a3a7-e1ace7e8b5ac.json)md5
+检查本地文件和远程文件[Submitted file](https://evalai.s3.amazonaws.com/media/submission_files/submission_158590/7c161873-8a7d-499e-8870-5886cf5caf02.json) md5
 
 ```bash
 (paddle) ➜  paddle_visual_bert git:(visual_bert_test) ✗ md5sum VQA2/result.json
-baa40b07c74126be1eca2e1d5da478b2  VQA2/result.json
+0a5cb1d54be1c35e8b3d9147dfb7aa85  VQA2/result.json
 
-(paddle) ➜  paddle_visual_bert git:(visual_bert_test) ✗ wget https://evalai.s3.amazonaws.com/media/submission_files/submission_156867/a9515a5e-b659-4b95-b3f7-2f9681934afd.json
---2021-09-14 16:55:47--  https://evalai.s3.amazonaws.com/media/submission_files/submission_156867/a9515a5e-b659-4b95-b3f7-2f9681934afd.json
-Resolving evalai.s3.amazonaws.com (evalai.s3.amazonaws.com)... 52.217.103.209
-Connecting to evalai.s3.amazonaws.com (evalai.s3.amazonaws.com)|52.217.103.209|:443... connected.
+(paddle) ➜  paddle_visual_bert git:(visual_bert_test) ✗ wget https://evalai.s3.amazonaws.com/media/submission_files/submission_158590/7c161873-8a7d-499e-8870-5886cf5caf02.json
+--2021-09-28 10:03:55--  https://evalai.s3.amazonaws.com/media/submission_files/submission_158590/7c161873-8a7d-499e-8870-5886cf5caf02.json
+Resolving evalai.s3.amazonaws.com (evalai.s3.amazonaws.com)... 52.216.136.220
+Connecting to evalai.s3.amazonaws.com (evalai.s3.amazonaws.com)|52.216.136.220|:443... connected.
 HTTP request sent, awaiting response... 200 OK
-Length: 20517922 (20M) [application/json]
-Saving to: ‘a9515a5e-b659-4b95-b3f7-2f9681934afd.json’
+Length: 20515983 (20M) [application/json]
+Saving to: ‘7c161873-8a7d-499e-8870-5886cf5caf02.json’
 
-100%[========================================================================================================================================================================================================>] 20,517,922  2.02MB/s   in 11s    
+100%[================================================================================================================================================================================================================================================>] 20,515,983  1.27MB/s   in 23s    
 
-2021-09-14 16:55:59 (1.82 MB/s) - ‘a9515a5e-b659-4b95-b3f7-2f9681934afd.json’ saved [20517922/20517922]
+2021-09-28 10:04:19 (875 KB/s) - ‘7c161873-8a7d-499e-8870-5886cf5caf02.json’ saved [20515983/20515983]
 
-(paddle) ➜  paddle_visual_bert git:(visual_bert_test) ✗ md5sum a9515a5e-b659-4b95-b3f7-2f9681934afd.json 
-baa40b07c74126be1eca2e1d5da478b2  a9515a5e-b659-4b95-b3f7-2f9681934afd.json
+(paddle) ➜  paddle_visual_bert git:(visual_bert_test) ✗ md5sum 7c161873-8a7d-499e-8870-5886cf5caf02.json 
+0a5cb1d54be1c35e8b3d9147dfb7aa85  7c161873-8a7d-499e-8870-5886cf5caf02.json
 ```
 
-### 原论文 Test-Dev 效果
+#### 对比原论文 VQA2 Test-Dev 效果
 
 原论文测试集结果由 仓库 [visualbert](https://github.com/chenkangyang/visualbert) 中脚本 `vqa_finetune_visualbert.sh` 运行得到
 
@@ -94,42 +151,40 @@ Test-Dev 三个结果文件对应链接: [Submitted file](https://evalai.s3.amaz
 
 ---
 
-### Paddle Test-Std 复现效果
+### （2）Paddle VQA2 Test-Std 复现效果
 
 提交到评测系统, 和提交到 Test-Dev 的是同一个文件
 
-
 ![Test-Std Submission Page](assets/img/my_submission_page_test_std.png)
 
-Test-Std 数据集测评结果 Sdtout file：复现 Overall 精度达到 `71.01`
+Test-Std 数据集测评结果 Sdtout file：复现 Overall 精度达到 `71.05`
 ![Test-Std STDOUT via paddle](assets/img/stdout_paddle_test_std.png)
 
-Test-Std 三个结果文件对应链接：[Submitted file](https://evalai.s3.amazonaws.com/media/submission_files/submission_156866/38a86fa3-a6da-4412-a4ea-7c6fe007b632.json), [Result file](https://evalai.s3.amazonaws.com/media/submission_files/submission_156866/e800807d-a82b-484a-baa2-c51a5b492bd4.json), [Stdout file](https://evalai.s3.amazonaws.com/media/submission_files/submission_156866/7420a494-037c-4fc3-8e15-1d81987fb0ed.txt)
+Test-Std 三个结果文件对应链接：[Submitted file](https://evalai.s3.amazonaws.com/media/submission_files/submission_158594/a88367ca-680d-4870-a441-0ef235297c48.json), [Result file](https://evalai.s3.amazonaws.com/media/submission_files/submission_158594/dd92ca33-d18b-46ea-8181-8516208e2fc3.json), [Stdout file](https://evalai.s3.amazonaws.com/media/submission_files/submission_158594/826b2a1e-1814-4b52-b2a0-ae10c80c62e4.txt)
 
-榜单排名 34:
+榜单排名 35:
 ![leadboard_paddle](assets/img/leadbord_paddle.png)
-本地和远程MD5[Submitted file](https://evalai.s3.amazonaws.com/media/submission_files/submission_156866/38a86fa3-a6da-4412-a4ea-7c6fe007b632.json)检查
+本地和远程MD5 [Submitted file](https://evalai.s3.amazonaws.com/media/submission_files/submission_158594/a88367ca-680d-4870-a441-0ef235297c48.json) 检查
 ```bash
 (paddle) ➜  paddle_visual_bert git:(visual_bert_test) ✗ md5sum VQA2/result.json
-baa40b07c74126be1eca2e1d5da478b2  VQA2/result.json
+0a5cb1d54be1c35e8b3d9147dfb7aa85  VQA2/result.json
 
-(paddle) ➜  paddle_visual_bert git:(visual_bert_test) ✗ wget https://evalai.s3.amazonaws.com/media/submission_files/submission_156866/38a86fa3-a6da-4412-a4ea-7c6fe007b632.json
---2021-09-14 16:39:15--  https://evalai.s3.amazonaws.com/media/submission_files/submission_156866/38a86fa3-a6da-4412-a4ea-7c6fe007b632.json
-Resolving evalai.s3.amazonaws.com (evalai.s3.amazonaws.com)... 52.216.97.179
-Connecting to evalai.s3.amazonaws.com (evalai.s3.amazonaws.com)|52.216.97.179|:443... connected.
+(paddle) ➜  paddle_visual_bert git:(visual_bert_test) ✗ wget https://evalai.s3.amazonaws.com/media/submission_files/submission_158594/a88367ca-680d-4870-a441-0ef235297c48.json--2021-09-28 10:16:53--  https://evalai.s3.amazonaws.com/media/submission_files/submission_158594/a88367ca-680d-4870-a441-0ef235297c48.json
+Resolving evalai.s3.amazonaws.com (evalai.s3.amazonaws.com)... 52.216.30.4
+Connecting to evalai.s3.amazonaws.com (evalai.s3.amazonaws.com)|52.216.30.4|:443... connected.
 HTTP request sent, awaiting response... 200 OK
-Length: 20517922 (20M) [application/json]
-Saving to: ‘38a86fa3-a6da-4412-a4ea-7c6fe007b632.json’
+Length: 20515983 (20M) [application/json]
+Saving to: ‘a88367ca-680d-4870-a441-0ef235297c48.json’
 
-100%[========================================================================================================================================================================================================>] 20,517,922  1.27MB/s   in 12s    
+100%[================================================================================================================================================================================================================================================>] 20,515,983  2.95MB/s   in 8.1s   
 
-2021-09-14 16:39:28 (1.63 MB/s) - ‘38a86fa3-a6da-4412-a4ea-7c6fe007b632.json’ saved [20517922/20517922]
+2021-09-28 10:17:03 (2.42 MB/s) - ‘a88367ca-680d-4870-a441-0ef235297c48.json’ saved [20515983/20515983]
 
-(paddle) ➜  paddle_visual_bert git:(visual_bert_test) ✗ md5sum 38a86fa3-a6da-4412-a4ea-7c6fe007b632.json 
-baa40b07c74126be1eca2e1d5da478b2  38a86fa3-a6da-4412-a4ea-7c6fe007b632.json
+(paddle) ➜  paddle_visual_bert git:(visual_bert_test) ✗ md5sum a88367ca-680d-4870-a441-0ef235297c48.json 
+0a5cb1d54be1c35e8b3d9147dfb7aa85  a88367ca-680d-4870-a441-0ef235297c48.json
 ```
 
-### 原论文 Test-Std 效果
+#### 对比原论文 VQA2 Test-Std 效果
 Test-Std 数据集测评结果 Sdtout file：原论文 Overall 精度达到 `71.01`
 ![Test-Std STDOUT via torch](assets/img/stdout_torch_test_std.png)
 
@@ -140,21 +195,76 @@ Test-Std 三个结果文件对应链接：[Submitted file](https://evalai.s3.ama
 
 ---
 
-## NLVR2 验证集accuracy复现效果
+## NLVR2 验证集结果 For 验收
 
-| 测试集 | Dev |
+| 验证集 | Dev |
 | -----  | -------- |
 | 原模型 |   67.4   |
 | Paddle复现 |  67.4 |
 
+读取`checkpoint/paddle_visualbert/visualbert-nlvr2-pre`，在此基础上**finetune**10个epoch，日志见：`logs/nlvr2`
+
+1. 在训练集**finetune**的同时，验证精度：
 ```bash
-cd NLVR2
-python run_predict.py
+sh nlvr2-finetune.sh
 ```
 
-结果显示如下
+**finetune** 配置如下：
+```
+-----------  Configuration Arguments -----------
+adam_epsilon: 1e-06
+batch_size: 16
+bert_model_name: bert-base-uncased
+device: gpu
+input_dir: ./X_NLVR/
+learning_rate: 3e-06
+logging_steps: 100
+max_seq_length: 128
+max_steps: -1
+model_name_or_path: checkpoint/paddle_visualbert/visualbert-nlvr2-pre
+model_type: visualbert
+num_train_epochs: 10
+output_dir: ./logs/nlvr2
+save_steps: 5000
+scale_loss: 32768
+seed: 42
+task_name: nlvr2
+use_amp: False
+warmup_proportion: 0.1
+warmup_steps: 0
+weight_decay: 0.0
+```
+双卡 1080Ti，训练10个epoch，完整结果见网盘：
+> 链接：https://pan.baidu.com/s/1ezMDSnGLqg9Fn-FmYqJXNA 
+提取码：t374 
+--来自百度网盘超级会员V5的分享
+
+
+2. 挑选**finetune**过程中表现较好的模型，在验证集上计算精度：
+
+```bash
+cd NLVR2
+CUDA_VISIBLE_DEVICES=0 python run_predict.py --model_name_or_path ../logs/nlvr2/nlvr2_ft_model_15000.pdparams
+```
+
+结果显示如下：
+```bash
+[2021-09-27 20:01:24,003] [    INFO] - Already cached /home/chenkangyang/.paddlenlp/models/bert-base-uncased/bert-base-uncased-vocab.txt
+W0927 20:01:24.032064 21844 device_context.cc:404] Please NOTE: device: 0, GPU Compute Capability: 6.1, Driver API Version: 10.2, Runtime API Version: 10.2
+W0927 20:01:24.037859 21844 device_context.cc:422] device: 0, cuDNN Version: 7.6.
+  0%|                                                                                                                                                                                                                                                                                                                                   | 0/3491 [00:00<?, ?it/s]acc 0.5
+ 14%|████████████████████████████████████████████▊                                                                                                                                                                                                                                                                            | 500/3491 [00:31<03:31, 14.17it/s]acc 0.6636726546906188
+ 29%|█████████████████████████████████████████████████████████████████████████████████████████▎                                                                                                                                                                                                                              | 1000/3491 [01:01<02:10, 19.02it/s]acc 0.6863136863136863
+ 43%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▉                                                                                                                                                                                  | 1499/3491 [01:31<01:46, 18.62it/s]acc 0.6715522984676882
+ 57%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▌                                                                                                                                     | 1998/3491 [02:00<01:26, 17.30it/s]acc 0.6749125437281359
+ 72%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▍                                                                                        | 2500/3491 [02:30<01:07, 14.70it/s]acc 0.6709316273490604
+ 86%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████                                            | 3000/3491 [03:00<00:27, 18.06it/s]acc 0.6757747417527491
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3491/3491 [03:30<00:00, 16.58it/s]
+Final acc 0.6747350329418504
+```
 
 ![NLVR2 Dev acc](assets/img/paddle_fuxian_nlvr2.png)
+
 
 ## 快速开始
 ```bash
@@ -166,10 +276,10 @@ cd PaddleNLP
 
 # 本地安装
 pip install -r requirements.txt
-pip install -e .
-
 # coco 数据的读取需要额外安装工具: pycocotools
 pip install pycocotools
+
+pip install -e .
 
 # 返回初始目录
 cd ..
@@ -196,7 +306,7 @@ python conver.py
 ```
 9个预训练权重[下载链接](https://pan.baidu.com/s/1Hu_b_RPVMACiA-G7oicHyg) 提取码：lujt
 
-### （一）模型精度对齐
+### （一）模型精度对齐 For 验收
 ```
 依次运行以下9段测试代码：
 
@@ -212,8 +322,73 @@ python conver.py
 │   └── compare_vqa.py
 ```
 
-3大任务相关模型，huggingface与paddle实现的输出logits，误差在10^-6 至 10^-7 量级
-预训练模型，huggingface与paddle实现的输出logits，30w词向量输出logits误差在10^-4量级，文字图像关联度logits误差在10^-6 至 10^-7 量级
+3大下游任务相关模型，huggingface与paddle实现的输出logits，最大误差在10^-6 至 10^-7 量级
+预训练模型，huggingface与paddle实现的输出logits，3w词向量输出logits平均误差在10^-5量级，最大误差在10^e-4 量级，文字图像关联度logits最大误差在10^-6 至 10^-7 量级
+
+**为什么输出logits最大误差在 10^-4?**
+以`vqa-pre`的精度对齐为例，将输入(1)隐藏层`228x768`，(2)linear层`768x30522`，(3)输出隐藏层`228x768`保存成npy文件, 对比torch参数，paddle参数，分别的运算结果，以及和numpy的矩阵运算结果对比；
+(2)处参数两套框架并无差距，输入端(1)处两套框架误差在 `10^-5` 量级，经过(2)`y=wx+b`后，输出端(3)误差扩大到`10^e-4`量级
+接着，使用numpy的矩阵运算，排除两套框架Linear算子的误差
+可以看到，numpy实现的Linear算子，误差同样从`10^-5`增加到`10^-4`
+所以`10^-4`的误差，来自于两个大矩阵乘法巨量的乘加运算累加而得
+
+![check_linear](assets/img/check_linear.png)
+
+参与运算的大矩阵如下：
+```bash
+27M     paddle_after_hs.npy
+688K    paddle_before_hs.npy
+120K    paddle_linear_bias.npy
+90M     paddle_linear_weight.npy
+27M     torch_after_hs.npy
+688K    torch_before_hs.npy
+120K    torch_linear_bias.npy
+90M     torch_linear_weight.npy
+```
+提供下载链接：
+> 链接：https://pan.baidu.com/s/1L2D4pKStqvRYK458S841ig 
+提取码：zq4p 
+--来自百度网盘超级会员V5的分享
+
+验证脚本：
+```python
+from importlib.machinery import FrozenImporter
+import numpy as np
+from ipdb import set_trace as st
+
+x = np.load("torch_before_hs.npy")
+w = np.load("torch_linear_weight.npy")
+b = np.load("torch_linear_bias.npy")
+y = np.load("torch_after_hs.npy")
+np_y = np.matmul(x, w.T) + b
+print("y=wx+b: numpy VS. torch y", np.amax(abs(y-np_y)))
+
+x1 = np.load("paddle_before_hs.npy")
+w1 = np.load("paddle_linear_weight.npy")
+b1 = np.load("paddle_linear_bias.npy")
+y1 = np.load("paddle_after_hs.npy")
+np_y1 = np.matmul(x1, w1.T) + b1
+print("y=wx+b: numpy VS. paddle", np.amax(abs(y1-np_y1)))
+
+print("pytorch paddle 768x30522 Linear层精度对比")
+print("x_diff", np.amax(abs(x-x1)))
+print("w_diff", np.amax(abs(w-w1)))
+print("b_diff", np.amax(abs(b-b1)))
+print("y_diff", np.amax(abs(y-y1)))
+print("np_y_diff", np.amax(abs(np_y-np_y1)))
+```
+
+验证脚本输出如下：
+```
+y=wx+b: numpy VS. torch y 1.1444092e-05
+y=wx+b: numpy VS. paddle 2.670288e-05
+pytorch paddle 768x30522 Linear层精度对比
+x_diff 5.698204e-05
+w_diff 0.0
+b_diff 0.0
+y_diff 0.0001411438
+np_y_diff 0.00013494492
+```
 
 #### (1) uclanlp/visualbert-vqa
 
@@ -252,11 +427,11 @@ torch_prediction_logits:[[[ -5.160263   -5.443255   -5.638448  ...  -5.2351427  
     -6.760184 ]]]
 torch_seq_relationship_logits shape:(1, 2)
 torch_seq_relationship_logits:[[-1.3950741  2.9067597]]
-[2021-09-07 21:13:38,066] [    INFO] - Already cached /home/chenkangyang/.paddlenlp/models/visualbert-vqa-pre/visualbert-vqa-pre.pdparams
-W0907 21:13:38.067657 35879 device_context.cc:404] Please NOTE: device: 0, GPU Compute Capability: 6.1, Driver API Version: 10.2, Runtime API Version: 10.2
-W0907 21:13:38.073184 35879 device_context.cc:422] device: 0, cuDNN Version: 7.6.
-[2021-09-07 21:13:44,186] [    INFO] - Already cached /home/chenkangyang/.paddlenlp/models/bert-base-uncased/bert-base-uncased-vocab.txt
-paddle_loss:[14.510853]
+[2021-09-28 16:06:58,497] [    INFO] - Already cached /home/chenkangyang/.paddlenlp/models/visualbert-vqa-pre/visualbert-vqa-pre.pdparams
+W0928 16:06:58.499399 32822 device_context.cc:404] Please NOTE: device: 0, GPU Compute Capability: 6.1, Driver API Version: 10.2, Runtime API Version: 10.2
+W0928 16:06:58.506577 32822 device_context.cc:422] device: 0, cuDNN Version: 7.6.
+[2021-09-28 16:07:08,234] [    INFO] - Already cached /home/chenkangyang/.paddlenlp/models/bert-base-uncased/bert-base-uncased-vocab.txt
+paddle_loss:[14.510852]
 paddle_prediction_logits shape:(1, 228, 30522)
 paddle_prediction_logits:[[[ -5.1602654  -5.4432545  -5.638447  ...  -5.2351446  -5.482642
     -3.8225822]
@@ -274,13 +449,13 @@ paddle_prediction_logits:[[[ -5.1602654  -5.4432545  -5.638447  ...  -5.2351446 
 paddle_seq_relationship_logits shape:(1, 2)
 paddle_seq_relationship_logits:[[-1.3950722  2.9067578]]
 prediction_logits_diff 0.0001411438
+prediction_logits_diff_mean 1.933369e-05
 seq_relationship_logits_diff 1.9073486e-06
 ```
 
 #### (3) uclanlp/visualbert-vqa-coco-pre
 
 ```bash
-(paddle) ➜  compare git:(visual_bert_test) ✗ CUDA_VISIBLE_DEVICES=8 python compare_vqa_coco_pre.py
 torch_loss:14.050429344177246
 torch_prediction_logits shape:(1, 228, 30522)
 torch_prediction_logits:[[[ -5.670497   -5.7650156  -5.827337  ...  -5.3450017  -5.150798
@@ -298,11 +473,11 @@ torch_prediction_logits:[[[ -5.670497   -5.7650156  -5.827337  ...  -5.3450017  
     -6.346738 ]]]
 torch_seq_relationship_logits shape:(1, 2)
 torch_seq_relationship_logits:[[-1.3558536  1.9389079]]
-[2021-09-07 21:17:49,091] [    INFO] - Already cached /home/chenkangyang/.paddlenlp/models/visualbert-vqa-coco-pre/visualbert-vqa-coco-pre.pdparams
-W0907 21:17:49.093269 40653 device_context.cc:404] Please NOTE: device: 0, GPU Compute Capability: 6.1, Driver API Version: 10.2, Runtime API Version: 10.2
-W0907 21:17:49.097941 40653 device_context.cc:422] device: 0, cuDNN Version: 7.6.
-[2021-09-07 21:17:55,718] [    INFO] - Already cached /home/chenkangyang/.paddlenlp/models/bert-base-uncased/bert-base-uncased-vocab.txt
-paddle_loss:[14.050401]
+[2021-09-28 16:07:55,375] [    INFO] - Already cached /home/chenkangyang/.paddlenlp/models/visualbert-vqa-coco-pre/visualbert-vqa-coco-pre.pdparams
+W0928 16:07:55.377184 33908 device_context.cc:404] Please NOTE: device: 0, GPU Compute Capability: 6.1, Driver API Version: 10.2, Runtime API Version: 10.2
+W0928 16:07:55.384131 33908 device_context.cc:422] device: 0, cuDNN Version: 7.6.
+[2021-09-28 16:08:04,560] [    INFO] - Already cached /home/chenkangyang/.paddlenlp/models/bert-base-uncased/bert-base-uncased-vocab.txt
+paddle_loss:[14.050402]
 paddle_prediction_logits shape:(1, 228, 30522)
 paddle_prediction_logits:[[[ -5.670502   -5.7650166  -5.827336  ...  -5.345      -5.1507998
     -3.5683985]
@@ -320,6 +495,7 @@ paddle_prediction_logits:[[[ -5.670502   -5.7650166  -5.827336  ...  -5.345     
 paddle_seq_relationship_logits shape:(1, 2)
 paddle_seq_relationship_logits:[[-1.3558533  1.9389079]]
 prediction_logits_diff 0.00020003319
+prediction_logits_diff_mean 2.1564441e-05
 seq_relationship_logits_diff 2.3841858e-07
 ```
 
@@ -343,7 +519,7 @@ paddle_prediction_logits:[[0.10217022 0.41632405]]
 #### (5) uclanlp/visualbert-nlvr2-pre
 
 ```bash
-(paddle) ➜  compare git:(visual_bert_test) ✗ CUDA_VISIBLE_DEVICES=8 python compare_nlvr2_pre.py
+(paddle) ➜  compare git:(visual_bert_test) ✗ python compare_nlvr2_pre.py     
 torch_loss:15.726880073547363
 torch_prediction_logits shape:(1, 228, 30522)
 torch_prediction_logits:[[[ -5.4536176  -5.341943   -5.2367973 ...  -5.0159187  -5.019937
@@ -361,11 +537,11 @@ torch_prediction_logits:[[[ -5.4536176  -5.341943   -5.2367973 ...  -5.0159187  
     -9.6509495]]]
 torch_seq_relationship_logits shape:(1, 2)
 torch_seq_relationship_logits:[[0.34560534 0.39115292]]
-[2021-09-07 21:21:10,507] [    INFO] - Already cached /home/chenkangyang/.paddlenlp/models/visualbert-nlvr2-pre/visualbert-nlvr2-pre.pdparams
-W0907 21:21:10.509459  4010 device_context.cc:404] Please NOTE: device: 0, GPU Compute Capability: 6.1, Driver API Version: 10.2, Runtime API Version: 10.2
-W0907 21:21:10.514405  4010 device_context.cc:422] device: 0, cuDNN Version: 7.6.
-[2021-09-07 21:21:16,764] [    INFO] - Already cached /home/chenkangyang/.paddlenlp/models/bert-base-uncased/bert-base-uncased-vocab.txt
-paddle_loss:[15.726868]
+[2021-09-28 16:19:44,343] [    INFO] - Already cached /home/chenkangyang/.paddlenlp/models/visualbert-nlvr2-pre/visualbert-nlvr2-pre.pdparams
+W0928 16:19:44.345515  7746 device_context.cc:404] Please NOTE: device: 0, GPU Compute Capability: 6.1, Driver API Version: 10.2, Runtime API Version: 10.2
+W0928 16:19:44.351539  7746 device_context.cc:422] device: 0, cuDNN Version: 7.6.
+[2021-09-28 16:19:54,790] [    INFO] - Already cached /home/chenkangyang/.paddlenlp/models/bert-base-uncased/bert-base-uncased-vocab.txt
+paddle_loss:[15.726869]
 paddle_prediction_logits shape:(1, 228, 30522)
 paddle_prediction_logits:[[[ -5.453615   -5.341945   -5.2367954 ...  -5.015916   -5.0199356
     -3.5210416]
@@ -383,6 +559,7 @@ paddle_prediction_logits:[[[ -5.453615   -5.341945   -5.2367954 ...  -5.015916  
 paddle_seq_relationship_logits shape:(1, 2)
 paddle_seq_relationship_logits:[[0.34560537 0.39115298]]
 prediction_logits_diff 0.00016832352
+prediction_logits_diff_mean 2.5270365e-05
 seq_relationship_logits_diff 5.9604645e-08
 ```
 
@@ -452,7 +629,6 @@ paddle_prediction_logits:[[12.157527  -2.9923863]]
 #### (8) uclanlp/visualbert-vcr-pre
 
 ```bash
-(paddle) ➜  compare git:(visual_bert_test) ✗ CUDA_VISIBLE_DEVICES=8 python compare_vcr_pre.py       
 torch_loss:16.665205001831055
 torch_prediction_logits shape:(1, 228, 30522)
 torch_prediction_logits:[[[ -7.6246576  -7.8262067  -7.7374654 ...  -7.4719334  -7.3951173
@@ -470,10 +646,10 @@ torch_prediction_logits:[[[ -7.6246576  -7.8262067  -7.7374654 ...  -7.4719334  
     -5.017529 ]]]
 torch_seq_relationship_logits shape:(1, 2)
 torch_seq_relationship_logits:[[ 1.947459  -1.1177909]]
-[2021-09-07 21:25:29,254] [    INFO] - Already cached /home/chenkangyang/.paddlenlp/models/visualbert-vcr-pre/visualbert-vcr-pre.pdparams
-W0907 21:25:29.257114  8946 device_context.cc:404] Please NOTE: device: 0, GPU Compute Capability: 6.1, Driver API Version: 10.2, Runtime API Version: 10.2
-W0907 21:25:29.261688  8946 device_context.cc:422] device: 0, cuDNN Version: 7.6.
-[2021-09-07 21:25:36,025] [    INFO] - Already cached /home/chenkangyang/.paddlenlp/models/bert-base-uncased/bert-base-uncased-vocab.txt
+[2021-09-28 16:44:21,252] [    INFO] - Already cached /home/chenkangyang/.paddlenlp/models/visualbert-vcr-pre/visualbert-vcr-pre.pdparams
+W0928 16:44:21.258366 37015 device_context.cc:404] Please NOTE: device: 0, GPU Compute Capability: 6.1, Driver API Version: 10.2, Runtime API Version: 10.2
+W0928 16:44:21.264308 37015 device_context.cc:422] device: 0, cuDNN Version: 7.6.
+[2021-09-28 16:44:32,190] [    INFO] - Already cached /home/chenkangyang/.paddlenlp/models/bert-base-uncased/bert-base-uncased-vocab.txt
 paddle_loss:[16.665222]
 paddle_prediction_logits shape:(1, 228, 30522)
 paddle_prediction_logits:[[[ -7.6246624  -7.8262095  -7.7374673 ...  -7.4719334  -7.3951154
@@ -492,13 +668,13 @@ paddle_prediction_logits:[[[ -7.6246624  -7.8262095  -7.7374673 ...  -7.4719334 
 paddle_seq_relationship_logits shape:(1, 2)
 paddle_seq_relationship_logits:[[ 1.947461 -1.117793]]
 prediction_logits_diff 0.00016927719
+prediction_logits_diff_mean 2.0780137e-05
 seq_relationship_logits_diff 2.026558e-06
 ```
 
 #### (9) uclanlp/visualbert-vcr-coco-pre
 
 ```bash
-(paddle) ➜  compare git:(visual_bert_test) ✗ CUDA_VISIBLE_DEVICES=8 python compare_vcr_coco_pre.py
 torch_loss:16.342382431030273
 torch_prediction_logits shape:(1, 228, 30522)
 torch_prediction_logits:[[[ -6.8914514  -7.0844073  -7.05301   ...  -6.354428   -6.562514
@@ -516,10 +692,10 @@ torch_prediction_logits:[[[ -6.8914514  -7.0844073  -7.05301   ...  -6.354428   
     -6.097442 ]]]
 torch_seq_relationship_logits shape:(1, 2)
 torch_seq_relationship_logits:[[ 1.2392894 -0.4313356]]
-[2021-09-07 21:26:07,495] [    INFO] - Already cached /home/chenkangyang/.paddlenlp/models/visualbert-vcr-coco-pre/visualbert-vcr-coco-pre.pdparams
-W0907 21:26:07.498122  9729 device_context.cc:404] Please NOTE: device: 0, GPU Compute Capability: 6.1, Driver API Version: 10.2, Runtime API Version: 10.2
-W0907 21:26:07.506218  9729 device_context.cc:422] device: 0, cuDNN Version: 7.6.
-[2021-09-07 21:26:14,260] [    INFO] - Already cached /home/chenkangyang/.paddlenlp/models/bert-base-uncased/bert-base-uncased-vocab.txt
+[2021-09-28 16:45:22,009] [    INFO] - Already cached /home/chenkangyang/.paddlenlp/models/visualbert-vcr-coco-pre/visualbert-vcr-coco-pre.pdparams
+W0928 16:45:22.012435 38153 device_context.cc:404] Please NOTE: device: 0, GPU Compute Capability: 6.1, Driver API Version: 10.2, Runtime API Version: 10.2
+W0928 16:45:22.017617 38153 device_context.cc:422] device: 0, cuDNN Version: 7.6.
+[2021-09-28 16:45:33,732] [    INFO] - Already cached /home/chenkangyang/.paddlenlp/models/bert-base-uncased/bert-base-uncased-vocab.txt
 paddle_loss:[16.342426]
 paddle_prediction_logits shape:(1, 228, 30522)
 paddle_prediction_logits:[[[ -6.89145    -7.084406   -7.0530114 ...  -6.354433   -6.5625167
@@ -538,6 +714,7 @@ paddle_prediction_logits:[[[ -6.89145    -7.084406   -7.0530114 ...  -6.354433  
 paddle_seq_relationship_logits shape:(1, 2)
 paddle_seq_relationship_logits:[[ 1.2392895 -0.4313354]]
 prediction_logits_diff 0.00016641617
+prediction_logits_diff_mean 2.1170428e-05
 seq_relationship_logits_diff 2.0861626e-07
 ```
 
@@ -692,25 +869,31 @@ python -m paddle.distributed.launch --gpus "4" --log_dir $LOG_DIR run_pretrain.p
 
 #### 3.1. VQA2
 
-> 运行 `sh vqa-finetune.sh`，载入预训练模型`visualbert-vqa.pdparams`, 训练日志见 `logs/vqa`
+> 运行 `sh vqa-finetune.sh`，载入预训练模型`visualbert-vqa-pre/model_state.pdparams`, 训练日志见 `logs/vqa`
 VQA2数据集对应 `coco_detectron_fix_100` 图像特征, 需要`./X_COCO/data/detectron_fix_100`
 
 一个优化任务：(1) 3129 个 answer 分类(有监督)
+
+单卡 1080Ti，训练10个epoch，完整结果见网盘：
+> 链接：https://pan.baidu.com/s/1Cci0wLT_roayj2e1KkmZvw 
+提取码：m973 
+--来自百度网盘超级会员V5的分享
 
 ```bash
 export DATA_DIR=./X_COCO/
 export LOG_DIR=./logs/vqa
 unset CUDA_VISIBLE_DEVICES
 
-python -m paddle.distributed.launch --gpus "5" --log_dir $LOG_DIR VQA2/run_vqa2.py \
+python -m paddle.distributed.launch --gpus "0" --log_dir $LOG_DIR VQA2/run_vqa2.py \
     --input_dir $DATA_DIR \
     --output_dir $LOG_DIR \
     --task_name vqa2 \
     --model_type visualbert \
-    --model_name_or_path visualbert-vqa \
+    --model_name_or_path checkpoint/paddle_visualbert/visualbert-vqa-pre \
     --batch_size 64 \
     --learning_rate 2e-5 \
-    --num_train_epochs 3
+    --save_steps 10000 \
+    --num_train_epochs 10 
 ```
 
 `input_dir`: 数据根目录
@@ -723,25 +906,33 @@ python -m paddle.distributed.launch --gpus "5" --log_dir $LOG_DIR VQA2/run_vqa2.
 `num_train_epochs`: 训练轮次
 
 #### 3.2. NLVR2
-> 运行 `sh nlvr2-finetune.sh`，载入预训练模型`visualbert-nlvr2.pdparams`, 训练日志见 `logs/nlvr2`
+> 运行 `sh nlvr2-finetune.sh`，载入预训练模型`visualbert-nlvr2-pre/model_state.pdparams`, 训练日志见 `logs/nlvr2`
 NLVR2数据集对应 `nlvr2_detectron_fix_144` 图像特征, 需要`./X_NLVR/data/detectron_fix_144`
 
 一个优化任务：(1) 2 个 answer 分类(有监督)
+
+双卡 1080Ti，训练10个epoch，完整结果见网盘：
+> 链接：https://pan.baidu.com/s/1ezMDSnGLqg9Fn-FmYqJXNA 
+提取码：t374 
+--来自百度网盘超级会员V5的分享
+
 
 ```bash
 export DATA_DIR=./X_NLVR/
 export LOG_DIR=./logs/nlvr2
 unset CUDA_VISIBLE_DEVICES
 
-python -m paddle.distributed.launch --gpus "6" --log_dir $LOG_DIR NLVR2/run_nlvr2.py \
+python -m paddle.distributed.launch --gpus "1,2" --log_dir $LOG_DIR NLVR2/run_nlvr2.py \
     --input_dir $DATA_DIR \
     --output_dir $LOG_DIR \
     --task_name nlvr2 \
     --model_type visualbert \
-    --model_name_or_path visualbert-nlvr2 \
+    --model_name_or_path checkpoint/paddle_visualbert/visualbert-nlvr2-pre \
     --batch_size 16 \
-    --learning_rate 5e-6 \
-    --num_train_epochs 3
+    --gradient_accumulation_steps 4 \
+    --learning_rate 2e-5 \
+    --save_steps 5000 \
+    --num_train_epochs 10
 ```
 
 `input_dir`: 数据根目录
@@ -778,10 +969,10 @@ python -m paddle.distributed.launch --gpus "6" --log_dir $LOG_DIR NLVR2/run_nlvr
 │   ├── compare_vqa_pre.py
 │   └── compare_vqa.py
 ├── logs # 模型训练日志
-│   ├── nlvr2
+│   ├── nlvr2 # 下游任务：nlvr2数据集finetune日志(载入nlvr2-pre)
 │   ├── nlvr2-coco-pre
 │   ├── nlvr2-pre
-│   ├── vqa
+│   ├── vqa # 下游任务：vqa数据集finetune日志(载入vqa-pre)
 │   ├── vqa-coco-pre
 │   └── vqa-pre
 ├── NLVR2 # NLVR2 数据集 训练和推理程序
@@ -859,7 +1050,7 @@ python -m paddle.distributed.launch --gpus "6" --log_dir $LOG_DIR NLVR2/run_nlvr
     └── visualbert-vqa-pre
 ```
 或者软连接到转换好的模型权重上
-`.paddlenlp/models/visualbert-vqa/visualbert-vqa.pdparams -> ${workspaceFolder}/checkpoint/paddle_visualbert/visualbert-vqa.pdparams`
+`.paddlenlp/models/visualbert-vqa/visualbert-vqa.pdparams -> ${workspaceFolder}/checkpoint/paddle_visualbert/visualbert-vqa/model_state.pdparams`
 
 例子如下：
 ```bash
