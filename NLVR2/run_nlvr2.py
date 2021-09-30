@@ -165,6 +165,11 @@ def parse_args():
         choices=["cpu", "gpu", "xpu"],
         help="The device to select to train the model, is must be cpu/gpu/xpu.")
     parser.add_argument(
+        "--gradient_accumulation_steps",
+        type=int,
+        default=1,
+        help="Gradient accumulation steps.")
+    parser.add_argument(
         "--use_amp",
         type=distutils.util.strtobool,
         default=False,
@@ -192,7 +197,8 @@ def set_seed(args):
 def evaluate(model, loss_fct, metric, data_loader):
     model.eval()
     metric.reset()
-    for batch in tqdm(data_loader, desc="Evaluate NLVR2 on dev"):
+    # for batch in tqdm(data_loader, desc="Evaluate NLVR2 on dev"):
+    for batch in data_loader:
         return_dict = False
         inputs = {
             "input_ids": batch[0],
@@ -394,14 +400,21 @@ def do_train(args):
                 else:
                     loss = outputs['loss']
                     prediction_logits = outputs['prediction_logits'].cpu().detach().numpy()
+            loss = loss / args.gradient_accumulation_steps
+            
             if args.use_amp:
                 scaler.scale(loss).backward()
-                scaler.minimize(optimizer, loss)
             else:
                 loss.backward()
-                optimizer.step()
-            lr_scheduler.step()
-            optimizer.clear_grad()
+
+            if global_step % args.gradient_accumulation_steps == 0:
+                if args.use_amp:
+                    scaler.minimize(optimizer, loss)
+                else:
+                    optimizer.step()
+                lr_scheduler.step()
+                optimizer.clear_grad()
+            
             if global_step % args.logging_steps == 0:
                 print(
                     "global step %d/%d, epoch: %d, batch: %d, rank_id: %s, loss: %f, lr: %.10f, speed: %.4f step/s"
