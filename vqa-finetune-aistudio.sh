@@ -1,0 +1,11 @@
+!python -m paddle.distributed.launch --gpus "0" --log_dir ./logs/vqa VQA2/run_vqa2.py \
+    --input_dir ./X_COCO/ \
+    --output_dir ./logs/vqa \
+    --task_name vqa2 \
+    --model_type visualbert \
+    --model_name_or_path checkpoint/paddle_visualbert/visualbert-vqa-pre \
+    --batch_size 64 \
+    --gradient_accumulation_steps 1 \
+    --learning_rate 2e-5 \
+    --save_steps 10000 \
+    --num_train_epochs 10
