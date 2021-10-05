@@ -1,3 +1,4 @@
 [submodule "PaddleNLP"]
 	path = PaddleNLP
 	url = https://github.com/chenkangyang/PaddleNLP.git
+	branch = visual_bert
