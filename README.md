@@ -21,6 +21,8 @@
 3. 学习主体：多层多头transformer
 4. 迁移任务：视觉问答、视觉推理
 
+下游任务 VQA2 微调实验 AISTUDIO: https://aistudio.baidu.com/aistudio/projectdetail/2436250
+下游任务 NLVR2 微调实验 AISTUDIO: https://aistudio.baidu.com/aistudio/projectdetail/2429811
 
 **原论文测试集效果：**
 
